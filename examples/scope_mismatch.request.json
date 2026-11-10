@@ -1,0 +1,248 @@
+{
+  "as_of": "2026-11-09",
+  "annual_volume": "10000",
+  "baseline": {
+    "supplier": "Fictional Northbridge Components",
+    "sku": "PANEL-100",
+    "revision": "A",
+    "currency": "GBP",
+    "unit": "piece",
+    "quantity": "1000",
+    "unit_price": "100.00",
+    "quote_date": "2026-01-01",
+    "valid_until": "2026-02-01",
+    "freight": "included",
+    "evidence": {
+      "supplier": {
+        "document": "scope_mismatch.txt",
+        "page": 1,
+        "quote": "baseline.supplier = Fictional Northbridge Components",
+        "sha256": "0e39a4c36e9573405042b1f20d66788511a24ca039c3df674a840036f5c1e0e4"
+      },
+      "sku": {
+        "document": "scope_mismatch.txt",
+        "page": 1,
+        "quote": "baseline.sku = PANEL-100",
+        "sha256": "0e39a4c36e9573405042b1f20d66788511a24ca039c3df674a840036f5c1e0e4"
+      },
+      "revision": {
+        "document": "scope_mismatch.txt",
+        "page": 1,
+        "quote": "baseline.revision = A",
+        "sha256": "0e39a4c36e9573405042b1f20d66788511a24ca039c3df674a840036f5c1e0e4"
+      },
+      "currency": {
+        "document": "scope_mismatch.txt",
+        "page": 1,
+        "quote": "baseline.currency = GBP",
+        "sha256": "0e39a4c36e9573405042b1f20d66788511a24ca039c3df674a840036f5c1e0e4"
+      },
+      "unit": {
+        "document": "scope_mismatch.txt",
+        "page": 1,
+        "quote": "baseline.unit = piece",
+        "sha256": "0e39a4c36e9573405042b1f20d66788511a24ca039c3df674a840036f5c1e0e4"
+      },
+      "quantity": {
+        "document": "scope_mismatch.txt",
+        "page": 1,
+        "quote": "baseline.quantity = 1000",
+        "sha256": "0e39a4c36e9573405042b1f20d66788511a24ca039c3df674a840036f5c1e0e4"
+      },
+      "unit_price": {
+        "document": "scope_mismatch.txt",
+        "page": 1,
+        "quote": "baseline.unit_price = 100.00",
+        "sha256": "0e39a4c36e9573405042b1f20d66788511a24ca039c3df674a840036f5c1e0e4"
+      },
+      "quote_date": {
+        "document": "scope_mismatch.txt",
+        "page": 1,
+        "quote": "baseline.quote_date = 2026-01-01",
+        "sha256": "0e39a4c36e9573405042b1f20d66788511a24ca039c3df674a840036f5c1e0e4"
+      },
+      "valid_until": {
+        "document": "scope_mismatch.txt",
+        "page": 1,
+        "quote": "baseline.valid_until = 2026-02-01",
+        "sha256": "0e39a4c36e9573405042b1f20d66788511a24ca039c3df674a840036f5c1e0e4"
+      },
+      "freight": {
+        "document": "scope_mismatch.txt",
+        "page": 1,
+        "quote": "baseline.freight = included",
+        "sha256": "0e39a4c36e9573405042b1f20d66788511a24ca039c3df674a840036f5c1e0e4"
+      }
+    }
+  },
+  "proposal": {
+    "supplier": "Fictional Northbridge Components",
+    "sku": "PANEL-100",
+    "revision": "B",
+    "currency": "GBP",
+    "unit": "piece",
+    "quantity": "1000",
+    "unit_price": "112.00",
+    "quote_date": "2026-11-01",
+    "valid_until": "2026-12-31",
+    "freight": "included",
+    "evidence": {
+      "supplier": {
+        "document": "scope_mismatch.txt",
+        "page": 2,
+        "quote": "proposal.supplier = Fictional Northbridge Components",
+        "sha256": "0e39a4c36e9573405042b1f20d66788511a24ca039c3df674a840036f5c1e0e4"
+      },
+      "sku": {
+        "document": "scope_mismatch.txt",
+        "page": 2,
+        "quote": "proposal.sku = PANEL-100",
+        "sha256": "0e39a4c36e9573405042b1f20d66788511a24ca039c3df674a840036f5c1e0e4"
+      },
+      "revision": {
+        "document": "scope_mismatch.txt",
+        "page": 2,
+        "quote": "proposal.revision = B",
+        "sha256": "0e39a4c36e9573405042b1f20d66788511a24ca039c3df674a840036f5c1e0e4"
+      },
+      "currency": {
+        "document": "scope_mismatch.txt",
+        "page": 2,
+        "quote": "proposal.currency = GBP",
+        "sha256": "0e39a4c36e9573405042b1f20d66788511a24ca039c3df674a840036f5c1e0e4"
+      },
+      "unit": {
+        "document": "scope_mismatch.txt",
+        "page": 2,
+        "quote": "proposal.unit = piece",
+        "sha256": "0e39a4c36e9573405042b1f20d66788511a24ca039c3df674a840036f5c1e0e4"
+      },
+      "quantity": {
+        "document": "scope_mismatch.txt",
+        "page": 2,
+        "quote": "proposal.quantity = 1000",
+        "sha256": "0e39a4c36e9573405042b1f20d66788511a24ca039c3df674a840036f5c1e0e4"
+      },
+      "unit_price": {
+        "document": "scope_mismatch.txt",
+        "page": 2,
+        "quote": "proposal.unit_price = 112.00",
+        "sha256": "0e39a4c36e9573405042b1f20d66788511a24ca039c3df674a840036f5c1e0e4"
+      },
+      "quote_date": {
+        "document": "scope_mismatch.txt",
+        "page": 2,
+        "quote": "proposal.quote_date = 2026-11-01",
+        "sha256": "0e39a4c36e9573405042b1f20d66788511a24ca039c3df674a840036f5c1e0e4"
+      },
+      "valid_until": {
+        "document": "scope_mismatch.txt",
+        "page": 2,
+        "quote": "proposal.valid_until = 2026-12-31",
+        "sha256": "0e39a4c36e9573405042b1f20d66788511a24ca039c3df674a840036f5c1e0e4"
+      },
+      "freight": {
+        "document": "scope_mismatch.txt",
+        "page": 2,
+        "quote": "proposal.freight = included",
+        "sha256": "0e39a4c36e9573405042b1f20d66788511a24ca039c3df674a840036f5c1e0e4"
+      }
+    }
+  },
+  "drivers": [
+    {
+      "name": "materials",
+      "share": "0.50",
+      "baseline_index": "100",
+      "current_index": "106",
+      "baseline_period": "2026-01-01",
+      "current_period": "2026-10-01",
+      "evidence": {
+        "document": "scope_mismatch.txt",
+        "page": 3,
+        "quote": "driver.materials = share:0.50; baseline_index:100; current_index:106; baseline_period:2026-01-01; current_period:2026-10-01",
+        "sha256": "0e39a4c36e9573405042b1f20d66788511a24ca039c3df674a840036f5c1e0e4"
+      }
+    },
+    {
+      "name": "energy",
+      "share": "0.20",
+      "baseline_index": "100",
+      "current_index": "90",
+      "baseline_period": "2026-01-01",
+      "current_period": "2026-10-01",
+      "evidence": {
+        "document": "scope_mismatch.txt",
+        "page": 3,
+        "quote": "driver.energy = share:0.20; baseline_index:100; current_index:90; baseline_period:2026-01-01; current_period:2026-10-01",
+        "sha256": "0e39a4c36e9573405042b1f20d66788511a24ca039c3df674a840036f5c1e0e4"
+      }
+    },
+    {
+      "name": "labour",
+      "share": "0.20",
+      "baseline_index": "100",
+      "current_index": "104",
+      "baseline_period": "2026-01-01",
+      "current_period": "2026-10-01",
+      "evidence": {
+        "document": "scope_mismatch.txt",
+        "page": 3,
+        "quote": "driver.labour = share:0.20; baseline_index:100; current_index:104; baseline_period:2026-01-01; current_period:2026-10-01",
+        "sha256": "0e39a4c36e9573405042b1f20d66788511a24ca039c3df674a840036f5c1e0e4"
+      }
+    },
+    {
+      "name": "freight",
+      "share": "0.10",
+      "baseline_index": "100",
+      "current_index": "105",
+      "baseline_period": "2026-01-01",
+      "current_period": "2026-10-01",
+      "evidence": {
+        "document": "scope_mismatch.txt",
+        "page": 3,
+        "quote": "driver.freight = share:0.10; baseline_index:100; current_index:105; baseline_period:2026-01-01; current_period:2026-10-01",
+        "sha256": "0e39a4c36e9573405042b1f20d66788511a24ca039c3df674a840036f5c1e0e4"
+      }
+    }
+  ],
+  "assumptions": [
+    "Baseline price moves proportionally with the declared index basket.",
+    "Cost shares are assumed; margin, FX, hedging and productivity are held constant.",
+    "Annual volume is an illustration, not committed demand or realised savings."
+  ],
+  "extraction_mode": "template",
+  "metadata_evidence": {
+    "as_of": {
+      "document": "scope_mismatch.txt",
+      "page": 3,
+      "quote": "as_of = 2026-11-09",
+      "sha256": "0e39a4c36e9573405042b1f20d66788511a24ca039c3df674a840036f5c1e0e4"
+    },
+    "annual_volume": {
+      "document": "scope_mismatch.txt",
+      "page": 3,
+      "quote": "annual_volume = 10000",
+      "sha256": "0e39a4c36e9573405042b1f20d66788511a24ca039c3df674a840036f5c1e0e4"
+    },
+    "assumptions.0": {
+      "document": "scope_mismatch.txt",
+      "page": 3,
+      "quote": "assumption = Baseline price moves proportionally with the declared index basket.",
+      "sha256": "0e39a4c36e9573405042b1f20d66788511a24ca039c3df674a840036f5c1e0e4"
+    },
+    "assumptions.1": {
+      "document": "scope_mismatch.txt",
+      "page": 3,
+      "quote": "assumption = Cost shares are assumed; margin, FX, hedging and productivity are held constant.",
+      "sha256": "0e39a4c36e9573405042b1f20d66788511a24ca039c3df674a840036f5c1e0e4"
+    },
+    "assumptions.2": {
+      "document": "scope_mismatch.txt",
+      "page": 3,
+      "quote": "assumption = Annual volume is an illustration, not committed demand or realised savings.",
+      "sha256": "0e39a4c36e9573405042b1f20d66788511a24ca039c3df674a840036f5c1e0e4"
+    }
+  }
+}

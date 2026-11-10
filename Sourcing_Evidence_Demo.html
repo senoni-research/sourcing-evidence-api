@@ -1,0 +1,702 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="A recorded demonstration of a sourcing evidence API: a conditional price scenario, missing evidence and changed specification.">
+<title>SENONI · Sourcing evidence — Recorded API demonstration</title>
+<style>
+:root{--paper:#f6f4ec;--white:#fffefa;--ink:#132e3d;--muted:#627782;--teal:#0e716f;--soft:#e8f2ed;--line:#d7ddd3;--amber:#78531b;--amber-bg:#f6eedc}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}main,header,footer{max-width:1180px;margin:auto;padding:0 36px}header{display:flex;justify-content:space-between;align-items:center;gap:20px;padding-top:25px;padding-bottom:25px;border-bottom:1px solid var(--line)}.brand{display:flex;align-items:center;gap:13px;font-size:18px;font-weight:750;letter-spacing:3px}.mark{border:1px solid var(--ink);border-radius:50%;width:32px;height:32px;display:grid;place-items:center;font:20px Georgia,serif;letter-spacing:0}.subtitle{font-size:13px;color:var(--muted);letter-spacing:0;font-weight:400;border-left:1px solid var(--line);padding-left:13px}.small{font-size:12px;color:var(--muted)}.hero{padding:44px 0 32px}.eyebrow{font-size:11px;font-weight:800;letter-spacing:1.9px;color:var(--teal);text-transform:uppercase}h1,h2,h3{font-family:Georgia,"Times New Roman",serif;font-weight:400;line-height:1.15;margin:12px 0 16px}h1{font-size:48px;max-width:900px;letter-spacing:-1px}h2{font-size:34px}h3{font-size:27px}p{margin:8px 0 16px;color:var(--muted)}.intro{max-width:760px;font-size:17px}.recorded{display:flex;align-items:center;gap:10px;width:fit-content;background:var(--ink);color:white;padding:10px 16px;border-radius:5px;font-size:13px;font-weight:650;margin:22px 0 0}.dot{height:7px;width:7px;border-radius:50%;background:#b4cfbc;flex:0 0 7px}.recorded-note{font-size:12px;margin-top:9px}.panel{background:var(--white);border:1px solid var(--line);border-radius:16px;padding:28px;min-width:0}.case-top{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}.status{display:inline-block;background:var(--soft);color:var(--teal);text-transform:uppercase;font-weight:750;letter-spacing:.6px;font-size:10px;border-radius:4px;padding:4px 8px}.status.amber{background:var(--amber-bg);color:var(--amber)}.primary{margin-bottom:20px}.result-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border:1px solid var(--line);border-radius:9px;overflow:hidden;margin:25px 0 14px}.metric{min-width:0;padding:20px;border-right:1px solid var(--line)}.metric:last-child{border-right:0;background:var(--soft)}.metric-label{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--muted)}.metric-value{font-family:Georgia,serif;font-size:36px;line-height:1.3;margin:6px 0}.metric:last-child .metric-value{color:var(--teal)}.metric-note{font-size:12px;color:var(--muted)}.gap{display:flex;align-items:flex-start;justify-content:space-between;gap:20px;padding:0 0 22px;border-bottom:1px solid var(--line);font-size:13px}.gap strong{font-size:20px}.gap .annual{text-align:right}.gap small{display:block;color:var(--muted);font-size:11px}.two-col{display:grid;grid-template-columns:1fr 1fr;gap:20px}.primary-columns{margin-top:24px;grid-template-columns:1.05fr 1fr;gap:30px}.section-label{font-size:14px;font-weight:750;margin:0 0 14px}table{width:100%;border-collapse:collapse;table-layout:fixed;font-size:13px}th,td{padding:12px 0;border-bottom:1px solid #e7ebe4;text-align:right}thead th{font-size:10px;color:var(--muted);font-weight:500}th:first-child{text-align:left;width:27%}th:nth-child(2){width:17%}th:nth-child(3){width:22%}th:nth-child(4){width:34%}tbody th{font-weight:650}.effect{display:flex;align-items:center;justify-content:flex-end;gap:12px}.effect>span:last-child{width:27px;flex:0 0 27px}.bar-track{display:block;width:76px;max-width:50%;height:6px;background:#e8ece5;border-radius:4px;overflow:hidden}.bar{display:block;height:6px;border-radius:4px;background:#80978a}.bar.negative{background:#42a08d}.formula{font:11px/1.6 ui-monospace,SFMono-Regular,Consolas,monospace;background:#f0f2ec;border-radius:6px;padding:12px;margin:16px 0 0;overflow-wrap:anywhere;color:var(--muted)}.excerpt{padding:11px 13px;background:#f8f9f4;border:1px solid #e0e4db;border-radius:7px;margin-bottom:9px;min-width:0}.source{font-size:10px;color:var(--teal);font-weight:700;margin-bottom:5px}code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;overflow-wrap:anywhere}.excerpt code{font-size:11px;line-height:1.5;display:block;color:var(--ink)}.meta{font-size:10px;margin:18px 0 0;color:var(--muted);overflow-wrap:anywhere}.callout{background:#f0f3ed;border-top:1px solid var(--line);margin:25px -28px -28px;padding:16px 28px;border-radius:0 0 16px 16px;font-size:12px;color:var(--muted)}.withheld h3{min-height:63px}.withheld-value{padding:13px 0;border-block:1px solid var(--line);font-weight:650;display:flex;justify-content:space-between;margin:18px 0 12px}.withheld-value span{color:var(--amber);font-size:20px}ul,ol{padding-left:19px;color:var(--muted);font-size:13px}li{padding-left:2px;margin:8px 0}.issue-list{min-height:44px}.section{padding-top:38px}.section-head{display:flex;justify-content:space-between;align-items:baseline;gap:20px}.section-head p{font-size:12px}.architecture{display:grid;grid-template-columns:repeat(4,1fr);gap:0;background:var(--ink);color:white;border-radius:14px;overflow:hidden;margin:16px 0 20px}.stage{padding:25px 23px;border-right:1px solid #37505c}.stage:last-child{border:0}.stage-number{font:12px ui-monospace,monospace;color:#a4c7b7}.stage h4{font-size:15px;line-height:1.4;margin:13px 0 9px}.stage p{font-size:12px;color:#bdcbd0;margin:0}.boundary{border-left:3px solid var(--teal);padding:3px 0 3px 18px;font-size:13px;margin:20px 0}.boundary strong{color:var(--ink)}.boundary p{margin:5px 0}.plain h3{font-family:inherit;font-size:16px;font-weight:700;margin-top:0}.plain{padding:23px 25px}.technical{margin-top:20px}.technical summary{cursor:pointer;font-size:12px;font-weight:700;padding:13px 0;border-block:1px solid var(--line)}.technical-content{padding:15px 0;font-size:11px;color:var(--muted)}.technical-content p{margin:7px 0}.technical-content pre{font-size:10px;white-space:pre-wrap;overflow-wrap:anywhere;background:#eef0e9;border-radius:6px;padding:16px;max-height:380px;overflow:auto}.technical-content code{display:block}footer{display:flex;justify-content:space-between;gap:20px;border-top:1px solid var(--line);margin-top:38px;padding-top:20px;padding-bottom:30px;font-size:11px;color:var(--muted)}.footer-brand{font-weight:750}a{color:var(--teal)}
+@media(max-width:760px){main,header,footer{padding-left:20px;padding-right:20px}header{padding-top:20px;padding-bottom:20px}.subtitle{display:none}header>.small{max-width:130px;text-align:right;font-size:10px}.hero{padding-top:30px}h1{font-size:37px}h2{font-size:29px}.intro{font-size:15px}.panel{padding:20px}.two-col,.primary-columns{grid-template-columns:1fr}.result-grid{margin-top:20px}.metric{padding:12px 9px}.metric-value{font-size:21px}.metric-label{font-size:8px;letter-spacing:.5px}.metric-note{font-size:10px}.gap{gap:12px}.gap strong{font-size:17px}.gap small{font-size:10px}.gap>div{max-width:52%}.callout{margin:20px -20px -20px;padding:15px 20px}.withheld h3,.issue-list{min-height:0}.section{padding-top:28px}.section-head{display:block}.section-head p{margin-top:-7px}.architecture{grid-template-columns:1fr 1fr}.stage{padding:20px 17px}.stage:nth-child(2){border-right:0}.stage:nth-child(-n+2){border-bottom:1px solid #37505c}.stage h4{font-size:14px}.stage p{font-size:11px}.recorded{font-size:12px;padding:10px 12px}footer{flex-direction:column;gap:6px}.primary-columns{gap:24px}.effect{gap:7px}}
+@media print{body{font-size:11px;background:white}header,main,footer{max-width:none;padding-left:0;padding-right:0}.hero{padding-top:20px}h1{font-size:34px}.panel{break-inside:avoid}.section{break-inside:avoid}.technical{display:none}.architecture{print-color-adjust:exact}.recorded,.metric:last-child,.status{print-color-adjust:exact}}
+</style></head><body>
+<header><div class="brand"><span class="mark">S</span>SENONI<span class="subtitle">Sourcing evidence</span></div><div class="small">Independent engineering prototype<br>Fictional supplier data</div></header>
+<main>
+<section class="hero"><div class="eyebrow">From supplier evidence to a clearer conversation</div><h1>What explains the price change?</h1><p class="intro">A supplier requests an increase. This API makes the declared cost drivers inspectable, shows a conditional price scenario, and withholds the calculation when the evidence does not support a comparison.</p><div class="recorded"><span class="dot"></span>Recorded API run — not a live service</div><p class="recorded-note">Three actual responses from the packaged document examples. Scenario as-of date: 2026-11-09.</p></section>
+<section class="panel primary"><div class="case-top"><span class="eyebrow">Case 01 · Complete evidence</span><span class="status">scenario available</span></div><h2>A price change you can inspect.</h2><p>The declared cost-driver basket is complete. Review the conditional scenario and discuss the remaining difference with the supplier.</p>
+<div class="result-grid"><div class="metric"><div class="metric-label">Baseline price</div><div class="metric-value">£100.00</div><div class="metric-note">per piece · GBP</div></div><div class="metric"><div class="metric-label">Supplier proposal</div><div class="metric-value">£112.00</div><div class="metric-note">+12% from baseline</div></div><div class="metric"><div class="metric-label">Indexed scenario</div><div class="metric-value">£102.30</div><div class="metric-note">+2.3% from declared drivers</div></div></div>
+<div class="gap"><div><strong>£9.70</strong> per piece<small>Proposal minus indexed scenario</small></div><div class="annual"><strong>£97,000.00</strong><small>Annualised scenario difference · not savings</small></div></div>
+<div class="two-col primary-columns"><div><h4 class="section-label">What drives the scenario</h4><table><thead><tr><th scope="col">Cost driver</th><th scope="col">Share</th><th scope="col">Index change</th><th scope="col">Effect, pp</th></tr></thead><tbody><tr><th scope="row">Materials</th><td>50%</td><td>+6%</td><td class="effect"><span class="bar-track" aria-hidden="true"><span class="bar " style="width:100.0000%"></span></span><span>+3</span></td></tr><tr><th scope="row">Energy</th><td>20%</td><td>-10%</td><td class="effect"><span class="bar-track" aria-hidden="true"><span class="bar negative" style="width:66.66666666666666666666666667%"></span></span><span>-2</span></td></tr><tr><th scope="row">Labour</th><td>20%</td><td>+4%</td><td class="effect"><span class="bar-track" aria-hidden="true"><span class="bar " style="width:26.66666666666666666666666667%"></span></span><span>+0.8</span></td></tr><tr><th scope="row">Freight</th><td>10%</td><td>+5%</td><td class="effect"><span class="bar-track" aria-hidden="true"><span class="bar " style="width:16.66666666666666666666666667%"></span></span><span>+0.5</span></td></tr></tbody></table><div class="formula">Scenario = baseline × (1 + Σ share × index change)</div><p class="small">Effects are percentage-point contributions to the baseline price. The declared basket is applied to the entire price.</p><h4 class="section-label" style="margin-top:25px">Questions for the supplier</h4><ol><li>Can the supplier reconcile the proposed price with the declared cost shares and index periods?</li><li>Do margin, hedging, productivity, volume, FX or contractual terms explain the remaining difference?</li><li>Are these indices representative of the supplier&#x27;s actual purchasing and production costs?</li></ol></div><div><h4 class="section-label">Selected source excerpts</h4><p class="small">Quotations matched to uploaded source text. References establish traceability, not commercial validity.</p><div class="excerpt"><div class="source">price_increase.pdf · page 1</div><code>baseline.unit_price = 100.00</code></div><div class="excerpt"><div class="source">price_increase.pdf · page 2</div><code>proposal.unit_price = 112.00</code></div><div class="excerpt"><div class="source">price_increase.pdf · page 3</div><code>annual_volume = 10000</code></div><div class="excerpt"><div class="source">price_increase.pdf · page 3</div><code>driver.energy = share:0.20; baseline_index:100; current_index:90; baseline_period:2026-01-01; current_period:2026-10-01</code></div><p class="meta">HTTP 200 · 29 source excerpts<br><code>review_8c8c9bfab97c2128</code></p></div></div>
+<div class="callout">This is a conditional cost-driver scenario, not a verified supplier cost. The difference is a discussion point; margin, hedging, productivity and contract terms may also matter.</div></section>
+<div class="two-col"><article class="panel withheld"><div class="case-top"><span class="eyebrow">CASE 02</span><span class="status amber">needs information</span></div><h3>A missing index is not zero.</h3><p>Calculation withheld until the missing or inconsistent evidence is resolved.</p><div class="withheld-value">Calculation withheld <span>—</span></div><ul class="issue-list"><li>Supply energy current index; it is not treated as zero.</li></ul><div class="excerpt"><div class="source">missing_evidence.pdf · page 3</div><code>driver.energy = share:0.20; baseline_index:100; current_index:UNKNOWN; baseline_period:2026-01-01; current_period:2026-10-01</code></div><p class="meta">HTTP 200 · 29 source excerpts · <code>review_770bb7031997f8e6</code></p></article><article class="panel withheld"><div class="case-top"><span class="eyebrow">CASE 03</span><span class="status amber">not comparable</span></div><h3>A new specification changes the question.</h3><p>Calculation withheld: quote scopes differ.</p><div class="withheld-value">Calculation withheld <span>—</span></div><ul class="issue-list"><li>Revision differs between baseline and proposal.</li></ul><div class="excerpt"><div class="source">scope_mismatch.pdf · page 1</div><code>baseline.revision = A</code></div><div class="excerpt"><div class="source">scope_mismatch.pdf · page 2</div><code>proposal.revision = B</code></div><p class="meta">HTTP 200 · 29 source excerpts · <code>review_f7ddab1df3864180</code></p></article></div>
+<section class="section"><div class="section-head"><div><div class="eyebrow">Engineering choices</div><h2>Evidence first. Arithmetic in code.</h2></div><p>FastAPI · typed validation · decimal arithmetic</p></div>
+<div class="architecture"><div class="stage"><span class="stage-number">01 / INPUT</span><h4>Document or JSON</h4><p>Small PDF/text uploads or structured facts enter the API. Input limits constrain the demonstration.</p></div><div class="stage"><span class="stage-number">02 / EXTRACT</span><h4>Typed facts + sources</h4><p>The labelled-template parser supplies facts, page references and quotations. Source identity and text are checked.</p></div><div class="stage"><span class="stage-number">03 / CHECK</span><h4>Comparability gates</h4><p>Schema, quote scope and evidence completeness determine whether a calculation is permitted.</p></div><div class="stage"><span class="stage-number">04 / REVIEW</span><h4>Deterministic scenario</h4><p>Decimal arithmetic returns contributions, explicit status, questions and an analysis fingerprint.</p></div></div>
+<div class="boundary"><strong>Labelled-template extraction is the default. No model call was used in these recorded cases.</strong><p>An optional OpenAI-compatible adapter can extract typed facts; it does not do the arithmetic or execute tools. Provider behaviour was tested with mocked responses. Live model extraction accuracy has not been validated.</p></div>
+</section>
+<section class="section"><div class="eyebrow">Interpretation &amp; scope</div><h2>A useful result includes its boundaries.</h2><div class="two-col"><div class="panel plain"><h3>Assumptions behind the scenario</h3><ul><li>Baseline price moves proportionally with the declared index basket.</li><li>Cost shares are assumed; margin, FX, hedging and productivity are held constant.</li><li>Annual volume is an illustration, not committed demand or realised savings.</li></ul><h3 style="margin-top:24px">What the result can establish</h3><ul><li>This is a conditional index-basket scenario, not a verified supplier should-cost estimate.</li><li>The gap is a discussion point, not evidence of overcharging or a saving achieved.</li><li>Shares, indices and annual volume are supplied inputs; their commercial validity requires human review.</li><li>The model assumes the baseline price moves proportionally with the declared basket; margin, hedging, productivity, contracts and FX may change the result.</li><li>Evidence excerpts establish traceability, not independent verification or semantic correctness.</li></ul></div><div class="panel plain"><h3>Prototype boundaries</h3><ul><li>All documents, supplier details and indices are fictional. There is no connection to any real buyer, procurement systems or live market data.</li><li>The default parser requires the published labelled format. There is no OCR. GBP is the only supported scenario currency.</li><li>The API can withhold a calculation; it does not approve prices, contact suppliers or create purchase orders.</li><li>Local operation is the demonstrated scope. Public uploads require isolated document processing, enterprise access controls and deployment review.</li><li>Requests are processed in memory. There is no durable audit store, tenant isolation or production operational history.</li></ul></div></div>
+<details class="technical"><summary>Recorded response provenance and full JSON</summary><div class="technical-content"><p>Source: <code>examples/recorded_runs.json</code></p><p>Model version: <code>declared-index-basket/1.0</code></p><p>Complete-case source SHA-256: <code>55891f4622c7fa85afa8c49947bc0db0ffd55169781d7800e4e44fde5cc9ad08</code></p><p>Complete-case analysis fingerprint: <code>8c8c9bfab97c212831438b6d9f2080423324e545808b83ebe49ade77f979655f</code></p><p>The recorded bodies below are preserved as supplied. Request identifiers are specific to these recorded calls; the analysis fingerprint identifies the deterministic analysis.</p><pre>[
+  {
+    &quot;case&quot;: &quot;price_increase&quot;,
+    &quot;http_status&quot;: 200,
+    &quot;response&quot;: {
+      &quot;review_id&quot;: &quot;review_8c8c9bfab97c2128&quot;,
+      &quot;request_id&quot;: &quot;fe4fecff97fa434389ed8b6b60e380fb&quot;,
+      &quot;analysis_fingerprint&quot;: &quot;8c8c9bfab97c212831438b6d9f2080423324e545808b83ebe49ade77f979655f&quot;,
+      &quot;model_version&quot;: &quot;declared-index-basket/1.0&quot;,
+      &quot;status&quot;: &quot;scenario_available&quot;,
+      &quot;summary&quot;: &quot;The declared cost-driver basket is complete. Review the conditional scenario and discuss the remaining difference with the supplier.&quot;,
+      &quot;issues&quot;: [],
+      &quot;calculation&quot;: {
+        &quot;currency&quot;: &quot;GBP&quot;,
+        &quot;unit&quot;: &quot;piece&quot;,
+        &quot;baseline_price&quot;: &quot;100.00&quot;,
+        &quot;proposed_price&quot;: &quot;112.00&quot;,
+        &quot;proposed_change_pct&quot;: &quot;12.0000&quot;,
+        &quot;model_change_pct&quot;: &quot;2.3000&quot;,
+        &quot;scenario_price&quot;: &quot;102.30&quot;,
+        &quot;gap_per_unit&quot;: &quot;9.70&quot;,
+        &quot;annualised_gap&quot;: &quot;97000.00&quot;,
+        &quot;contributions&quot;: [
+          {
+            &quot;name&quot;: &quot;materials&quot;,
+            &quot;share&quot;: &quot;0.50&quot;,
+            &quot;index_change_pct&quot;: &quot;6.0000&quot;,
+            &quot;contribution_pp&quot;: &quot;3.0000&quot;
+          },
+          {
+            &quot;name&quot;: &quot;energy&quot;,
+            &quot;share&quot;: &quot;0.20&quot;,
+            &quot;index_change_pct&quot;: &quot;-10.0000&quot;,
+            &quot;contribution_pp&quot;: &quot;-2.0000&quot;
+          },
+          {
+            &quot;name&quot;: &quot;labour&quot;,
+            &quot;share&quot;: &quot;0.20&quot;,
+            &quot;index_change_pct&quot;: &quot;4.0000&quot;,
+            &quot;contribution_pp&quot;: &quot;0.8000&quot;
+          },
+          {
+            &quot;name&quot;: &quot;freight&quot;,
+            &quot;share&quot;: &quot;0.10&quot;,
+            &quot;index_change_pct&quot;: &quot;5.0000&quot;,
+            &quot;contribution_pp&quot;: &quot;0.5000&quot;
+          }
+        ]
+      },
+      &quot;questions&quot;: [
+        &quot;Can the supplier reconcile the proposed price with the declared cost shares and index periods?&quot;,
+        &quot;Do margin, hedging, productivity, volume, FX or contractual terms explain the remaining difference?&quot;,
+        &quot;Are these indices representative of the supplier&#x27;s actual purchasing and production costs?&quot;
+      ],
+      &quot;assumptions&quot;: [
+        &quot;Baseline price moves proportionally with the declared index basket.&quot;,
+        &quot;Cost shares are assumed; margin, FX, hedging and productivity are held constant.&quot;,
+        &quot;Annual volume is an illustration, not committed demand or realised savings.&quot;
+      ],
+      &quot;evidence&quot;: [
+        {
+          &quot;document&quot;: &quot;price_increase.pdf&quot;,
+          &quot;page&quot;: 1,
+          &quot;quote&quot;: &quot;baseline.supplier = Fictional Northbridge Components&quot;,
+          &quot;sha256&quot;: &quot;55891f4622c7fa85afa8c49947bc0db0ffd55169781d7800e4e44fde5cc9ad08&quot;
+        },
+        {
+          &quot;document&quot;: &quot;price_increase.pdf&quot;,
+          &quot;page&quot;: 1,
+          &quot;quote&quot;: &quot;baseline.sku = PANEL-100&quot;,
+          &quot;sha256&quot;: &quot;55891f4622c7fa85afa8c49947bc0db0ffd55169781d7800e4e44fde5cc9ad08&quot;
+        },
+        {
+          &quot;document&quot;: &quot;price_increase.pdf&quot;,
+          &quot;page&quot;: 1,
+          &quot;quote&quot;: &quot;baseline.revision = A&quot;,
+          &quot;sha256&quot;: &quot;55891f4622c7fa85afa8c49947bc0db0ffd55169781d7800e4e44fde5cc9ad08&quot;
+        },
+        {
+          &quot;document&quot;: &quot;price_increase.pdf&quot;,
+          &quot;page&quot;: 1,
+          &quot;quote&quot;: &quot;baseline.currency = GBP&quot;,
+          &quot;sha256&quot;: &quot;55891f4622c7fa85afa8c49947bc0db0ffd55169781d7800e4e44fde5cc9ad08&quot;
+        },
+        {
+          &quot;document&quot;: &quot;price_increase.pdf&quot;,
+          &quot;page&quot;: 1,
+          &quot;quote&quot;: &quot;baseline.unit = piece&quot;,
+          &quot;sha256&quot;: &quot;55891f4622c7fa85afa8c49947bc0db0ffd55169781d7800e4e44fde5cc9ad08&quot;
+        },
+        {
+          &quot;document&quot;: &quot;price_increase.pdf&quot;,
+          &quot;page&quot;: 1,
+          &quot;quote&quot;: &quot;baseline.quantity = 1000&quot;,
+          &quot;sha256&quot;: &quot;55891f4622c7fa85afa8c49947bc0db0ffd55169781d7800e4e44fde5cc9ad08&quot;
+        },
+        {
+          &quot;document&quot;: &quot;price_increase.pdf&quot;,
+          &quot;page&quot;: 1,
+          &quot;quote&quot;: &quot;baseline.unit_price = 100.00&quot;,
+          &quot;sha256&quot;: &quot;55891f4622c7fa85afa8c49947bc0db0ffd55169781d7800e4e44fde5cc9ad08&quot;
+        },
+        {
+          &quot;document&quot;: &quot;price_increase.pdf&quot;,
+          &quot;page&quot;: 1,
+          &quot;quote&quot;: &quot;baseline.quote_date = 2026-01-01&quot;,
+          &quot;sha256&quot;: &quot;55891f4622c7fa85afa8c49947bc0db0ffd55169781d7800e4e44fde5cc9ad08&quot;
+        },
+        {
+          &quot;document&quot;: &quot;price_increase.pdf&quot;,
+          &quot;page&quot;: 1,
+          &quot;quote&quot;: &quot;baseline.valid_until = 2026-02-01&quot;,
+          &quot;sha256&quot;: &quot;55891f4622c7fa85afa8c49947bc0db0ffd55169781d7800e4e44fde5cc9ad08&quot;
+        },
+        {
+          &quot;document&quot;: &quot;price_increase.pdf&quot;,
+          &quot;page&quot;: 1,
+          &quot;quote&quot;: &quot;baseline.freight = included&quot;,
+          &quot;sha256&quot;: &quot;55891f4622c7fa85afa8c49947bc0db0ffd55169781d7800e4e44fde5cc9ad08&quot;
+        },
+        {
+          &quot;document&quot;: &quot;price_increase.pdf&quot;,
+          &quot;page&quot;: 2,
+          &quot;quote&quot;: &quot;proposal.supplier = Fictional Northbridge Components&quot;,
+          &quot;sha256&quot;: &quot;55891f4622c7fa85afa8c49947bc0db0ffd55169781d7800e4e44fde5cc9ad08&quot;
+        },
+        {
+          &quot;document&quot;: &quot;price_increase.pdf&quot;,
+          &quot;page&quot;: 2,
+          &quot;quote&quot;: &quot;proposal.sku = PANEL-100&quot;,
+          &quot;sha256&quot;: &quot;55891f4622c7fa85afa8c49947bc0db0ffd55169781d7800e4e44fde5cc9ad08&quot;
+        },
+        {
+          &quot;document&quot;: &quot;price_increase.pdf&quot;,
+          &quot;page&quot;: 2,
+          &quot;quote&quot;: &quot;proposal.revision = A&quot;,
+          &quot;sha256&quot;: &quot;55891f4622c7fa85afa8c49947bc0db0ffd55169781d7800e4e44fde5cc9ad08&quot;
+        },
+        {
+          &quot;document&quot;: &quot;price_increase.pdf&quot;,
+          &quot;page&quot;: 2,
+          &quot;quote&quot;: &quot;proposal.currency = GBP&quot;,
+          &quot;sha256&quot;: &quot;55891f4622c7fa85afa8c49947bc0db0ffd55169781d7800e4e44fde5cc9ad08&quot;
+        },
+        {
+          &quot;document&quot;: &quot;price_increase.pdf&quot;,
+          &quot;page&quot;: 2,
+          &quot;quote&quot;: &quot;proposal.unit = piece&quot;,
+          &quot;sha256&quot;: &quot;55891f4622c7fa85afa8c49947bc0db0ffd55169781d7800e4e44fde5cc9ad08&quot;
+        },
+        {
+          &quot;document&quot;: &quot;price_increase.pdf&quot;,
+          &quot;page&quot;: 2,
+          &quot;quote&quot;: &quot;proposal.quantity = 1000&quot;,
+          &quot;sha256&quot;: &quot;55891f4622c7fa85afa8c49947bc0db0ffd55169781d7800e4e44fde5cc9ad08&quot;
+        },
+        {
+          &quot;document&quot;: &quot;price_increase.pdf&quot;,
+          &quot;page&quot;: 2,
+          &quot;quote&quot;: &quot;proposal.unit_price = 112.00&quot;,
+          &quot;sha256&quot;: &quot;55891f4622c7fa85afa8c49947bc0db0ffd55169781d7800e4e44fde5cc9ad08&quot;
+        },
+        {
+          &quot;document&quot;: &quot;price_increase.pdf&quot;,
+          &quot;page&quot;: 2,
+          &quot;quote&quot;: &quot;proposal.quote_date = 2026-11-01&quot;,
+          &quot;sha256&quot;: &quot;55891f4622c7fa85afa8c49947bc0db0ffd55169781d7800e4e44fde5cc9ad08&quot;
+        },
+        {
+          &quot;document&quot;: &quot;price_increase.pdf&quot;,
+          &quot;page&quot;: 2,
+          &quot;quote&quot;: &quot;proposal.valid_until = 2026-12-31&quot;,
+          &quot;sha256&quot;: &quot;55891f4622c7fa85afa8c49947bc0db0ffd55169781d7800e4e44fde5cc9ad08&quot;
+        },
+        {
+          &quot;document&quot;: &quot;price_increase.pdf&quot;,
+          &quot;page&quot;: 2,
+          &quot;quote&quot;: &quot;proposal.freight = included&quot;,
+          &quot;sha256&quot;: &quot;55891f4622c7fa85afa8c49947bc0db0ffd55169781d7800e4e44fde5cc9ad08&quot;
+        },
+        {
+          &quot;document&quot;: &quot;price_increase.pdf&quot;,
+          &quot;page&quot;: 3,
+          &quot;quote&quot;: &quot;as_of = 2026-11-09&quot;,
+          &quot;sha256&quot;: &quot;55891f4622c7fa85afa8c49947bc0db0ffd55169781d7800e4e44fde5cc9ad08&quot;
+        },
+        {
+          &quot;document&quot;: &quot;price_increase.pdf&quot;,
+          &quot;page&quot;: 3,
+          &quot;quote&quot;: &quot;annual_volume = 10000&quot;,
+          &quot;sha256&quot;: &quot;55891f4622c7fa85afa8c49947bc0db0ffd55169781d7800e4e44fde5cc9ad08&quot;
+        },
+        {
+          &quot;document&quot;: &quot;price_increase.pdf&quot;,
+          &quot;page&quot;: 3,
+          &quot;quote&quot;: &quot;assumption = Baseline price moves proportionally with the declared index basket.&quot;,
+          &quot;sha256&quot;: &quot;55891f4622c7fa85afa8c49947bc0db0ffd55169781d7800e4e44fde5cc9ad08&quot;
+        },
+        {
+          &quot;document&quot;: &quot;price_increase.pdf&quot;,
+          &quot;page&quot;: 3,
+          &quot;quote&quot;: &quot;assumption = Cost shares are assumed; margin, FX, hedging and productivity are held constant.&quot;,
+          &quot;sha256&quot;: &quot;55891f4622c7fa85afa8c49947bc0db0ffd55169781d7800e4e44fde5cc9ad08&quot;
+        },
+        {
+          &quot;document&quot;: &quot;price_increase.pdf&quot;,
+          &quot;page&quot;: 3,
+          &quot;quote&quot;: &quot;assumption = Annual volume is an illustration, not committed demand or realised savings.&quot;,
+          &quot;sha256&quot;: &quot;55891f4622c7fa85afa8c49947bc0db0ffd55169781d7800e4e44fde5cc9ad08&quot;
+        },
+        {
+          &quot;document&quot;: &quot;price_increase.pdf&quot;,
+          &quot;page&quot;: 3,
+          &quot;quote&quot;: &quot;driver.materials = share:0.50; baseline_index:100; current_index:106; baseline_period:2026-01-01; current_period:2026-10-01&quot;,
+          &quot;sha256&quot;: &quot;55891f4622c7fa85afa8c49947bc0db0ffd55169781d7800e4e44fde5cc9ad08&quot;
+        },
+        {
+          &quot;document&quot;: &quot;price_increase.pdf&quot;,
+          &quot;page&quot;: 3,
+          &quot;quote&quot;: &quot;driver.energy = share:0.20; baseline_index:100; current_index:90; baseline_period:2026-01-01; current_period:2026-10-01&quot;,
+          &quot;sha256&quot;: &quot;55891f4622c7fa85afa8c49947bc0db0ffd55169781d7800e4e44fde5cc9ad08&quot;
+        },
+        {
+          &quot;document&quot;: &quot;price_increase.pdf&quot;,
+          &quot;page&quot;: 3,
+          &quot;quote&quot;: &quot;driver.labour = share:0.20; baseline_index:100; current_index:104; baseline_period:2026-01-01; current_period:2026-10-01&quot;,
+          &quot;sha256&quot;: &quot;55891f4622c7fa85afa8c49947bc0db0ffd55169781d7800e4e44fde5cc9ad08&quot;
+        },
+        {
+          &quot;document&quot;: &quot;price_increase.pdf&quot;,
+          &quot;page&quot;: 3,
+          &quot;quote&quot;: &quot;driver.freight = share:0.10; baseline_index:100; current_index:105; baseline_period:2026-01-01; current_period:2026-10-01&quot;,
+          &quot;sha256&quot;: &quot;55891f4622c7fa85afa8c49947bc0db0ffd55169781d7800e4e44fde5cc9ad08&quot;
+        }
+      ],
+      &quot;extraction_mode&quot;: &quot;template&quot;,
+      &quot;evidence_validation&quot;: &quot;quotations_matched_to_source_text&quot;,
+      &quot;limitations&quot;: [
+        &quot;This is a conditional index-basket scenario, not a verified supplier should-cost estimate.&quot;,
+        &quot;The gap is a discussion point, not evidence of overcharging or a saving achieved.&quot;,
+        &quot;Shares, indices and annual volume are supplied inputs; their commercial validity requires human review.&quot;,
+        &quot;The model assumes the baseline price moves proportionally with the declared basket; margin, hedging, productivity, contracts and FX may change the result.&quot;,
+        &quot;Evidence excerpts establish traceability, not independent verification or semantic correctness.&quot;
+      ],
+      &quot;processing_ms&quot;: 9.359
+    }
+  },
+  {
+    &quot;case&quot;: &quot;missing_evidence&quot;,
+    &quot;http_status&quot;: 200,
+    &quot;response&quot;: {
+      &quot;review_id&quot;: &quot;review_770bb7031997f8e6&quot;,
+      &quot;request_id&quot;: &quot;debc3c3bc7494f0fbfcf298fd889edbc&quot;,
+      &quot;analysis_fingerprint&quot;: &quot;770bb7031997f8e65057895f830471aabfb0815e4f9a6dbf5cd1eaf9c5d2e983&quot;,
+      &quot;model_version&quot;: &quot;declared-index-basket/1.0&quot;,
+      &quot;status&quot;: &quot;needs_information&quot;,
+      &quot;summary&quot;: &quot;Calculation withheld until the missing or inconsistent evidence is resolved.&quot;,
+      &quot;issues&quot;: [
+        {
+          &quot;code&quot;: &quot;missing_driver_fact&quot;,
+          &quot;message&quot;: &quot;Supply energy current index; it is not treated as zero.&quot;,
+          &quot;field&quot;: &quot;drivers.1.current_index&quot;
+        }
+      ],
+      &quot;calculation&quot;: null,
+      &quot;questions&quot;: [
+        &quot;Supply energy current index; it is not treated as zero.&quot;
+      ],
+      &quot;assumptions&quot;: [
+        &quot;Baseline price moves proportionally with the declared index basket.&quot;,
+        &quot;Cost shares are assumed; margin, FX, hedging and productivity are held constant.&quot;,
+        &quot;Annual volume is an illustration, not committed demand or realised savings.&quot;
+      ],
+      &quot;evidence&quot;: [
+        {
+          &quot;document&quot;: &quot;missing_evidence.pdf&quot;,
+          &quot;page&quot;: 1,
+          &quot;quote&quot;: &quot;baseline.supplier = Fictional Northbridge Components&quot;,
+          &quot;sha256&quot;: &quot;ff361d54815a8ba81632458e45dbe3466c563d7a81b83100f879bb56eb718fd6&quot;
+        },
+        {
+          &quot;document&quot;: &quot;missing_evidence.pdf&quot;,
+          &quot;page&quot;: 1,
+          &quot;quote&quot;: &quot;baseline.sku = PANEL-100&quot;,
+          &quot;sha256&quot;: &quot;ff361d54815a8ba81632458e45dbe3466c563d7a81b83100f879bb56eb718fd6&quot;
+        },
+        {
+          &quot;document&quot;: &quot;missing_evidence.pdf&quot;,
+          &quot;page&quot;: 1,
+          &quot;quote&quot;: &quot;baseline.revision = A&quot;,
+          &quot;sha256&quot;: &quot;ff361d54815a8ba81632458e45dbe3466c563d7a81b83100f879bb56eb718fd6&quot;
+        },
+        {
+          &quot;document&quot;: &quot;missing_evidence.pdf&quot;,
+          &quot;page&quot;: 1,
+          &quot;quote&quot;: &quot;baseline.currency = GBP&quot;,
+          &quot;sha256&quot;: &quot;ff361d54815a8ba81632458e45dbe3466c563d7a81b83100f879bb56eb718fd6&quot;
+        },
+        {
+          &quot;document&quot;: &quot;missing_evidence.pdf&quot;,
+          &quot;page&quot;: 1,
+          &quot;quote&quot;: &quot;baseline.unit = piece&quot;,
+          &quot;sha256&quot;: &quot;ff361d54815a8ba81632458e45dbe3466c563d7a81b83100f879bb56eb718fd6&quot;
+        },
+        {
+          &quot;document&quot;: &quot;missing_evidence.pdf&quot;,
+          &quot;page&quot;: 1,
+          &quot;quote&quot;: &quot;baseline.quantity = 1000&quot;,
+          &quot;sha256&quot;: &quot;ff361d54815a8ba81632458e45dbe3466c563d7a81b83100f879bb56eb718fd6&quot;
+        },
+        {
+          &quot;document&quot;: &quot;missing_evidence.pdf&quot;,
+          &quot;page&quot;: 1,
+          &quot;quote&quot;: &quot;baseline.unit_price = 100.00&quot;,
+          &quot;sha256&quot;: &quot;ff361d54815a8ba81632458e45dbe3466c563d7a81b83100f879bb56eb718fd6&quot;
+        },
+        {
+          &quot;document&quot;: &quot;missing_evidence.pdf&quot;,
+          &quot;page&quot;: 1,
+          &quot;quote&quot;: &quot;baseline.quote_date = 2026-01-01&quot;,
+          &quot;sha256&quot;: &quot;ff361d54815a8ba81632458e45dbe3466c563d7a81b83100f879bb56eb718fd6&quot;
+        },
+        {
+          &quot;document&quot;: &quot;missing_evidence.pdf&quot;,
+          &quot;page&quot;: 1,
+          &quot;quote&quot;: &quot;baseline.valid_until = 2026-02-01&quot;,
+          &quot;sha256&quot;: &quot;ff361d54815a8ba81632458e45dbe3466c563d7a81b83100f879bb56eb718fd6&quot;
+        },
+        {
+          &quot;document&quot;: &quot;missing_evidence.pdf&quot;,
+          &quot;page&quot;: 1,
+          &quot;quote&quot;: &quot;baseline.freight = included&quot;,
+          &quot;sha256&quot;: &quot;ff361d54815a8ba81632458e45dbe3466c563d7a81b83100f879bb56eb718fd6&quot;
+        },
+        {
+          &quot;document&quot;: &quot;missing_evidence.pdf&quot;,
+          &quot;page&quot;: 2,
+          &quot;quote&quot;: &quot;proposal.supplier = Fictional Northbridge Components&quot;,
+          &quot;sha256&quot;: &quot;ff361d54815a8ba81632458e45dbe3466c563d7a81b83100f879bb56eb718fd6&quot;
+        },
+        {
+          &quot;document&quot;: &quot;missing_evidence.pdf&quot;,
+          &quot;page&quot;: 2,
+          &quot;quote&quot;: &quot;proposal.sku = PANEL-100&quot;,
+          &quot;sha256&quot;: &quot;ff361d54815a8ba81632458e45dbe3466c563d7a81b83100f879bb56eb718fd6&quot;
+        },
+        {
+          &quot;document&quot;: &quot;missing_evidence.pdf&quot;,
+          &quot;page&quot;: 2,
+          &quot;quote&quot;: &quot;proposal.revision = A&quot;,
+          &quot;sha256&quot;: &quot;ff361d54815a8ba81632458e45dbe3466c563d7a81b83100f879bb56eb718fd6&quot;
+        },
+        {
+          &quot;document&quot;: &quot;missing_evidence.pdf&quot;,
+          &quot;page&quot;: 2,
+          &quot;quote&quot;: &quot;proposal.currency = GBP&quot;,
+          &quot;sha256&quot;: &quot;ff361d54815a8ba81632458e45dbe3466c563d7a81b83100f879bb56eb718fd6&quot;
+        },
+        {
+          &quot;document&quot;: &quot;missing_evidence.pdf&quot;,
+          &quot;page&quot;: 2,
+          &quot;quote&quot;: &quot;proposal.unit = piece&quot;,
+          &quot;sha256&quot;: &quot;ff361d54815a8ba81632458e45dbe3466c563d7a81b83100f879bb56eb718fd6&quot;
+        },
+        {
+          &quot;document&quot;: &quot;missing_evidence.pdf&quot;,
+          &quot;page&quot;: 2,
+          &quot;quote&quot;: &quot;proposal.quantity = 1000&quot;,
+          &quot;sha256&quot;: &quot;ff361d54815a8ba81632458e45dbe3466c563d7a81b83100f879bb56eb718fd6&quot;
+        },
+        {
+          &quot;document&quot;: &quot;missing_evidence.pdf&quot;,
+          &quot;page&quot;: 2,
+          &quot;quote&quot;: &quot;proposal.unit_price = 112.00&quot;,
+          &quot;sha256&quot;: &quot;ff361d54815a8ba81632458e45dbe3466c563d7a81b83100f879bb56eb718fd6&quot;
+        },
+        {
+          &quot;document&quot;: &quot;missing_evidence.pdf&quot;,
+          &quot;page&quot;: 2,
+          &quot;quote&quot;: &quot;proposal.quote_date = 2026-11-01&quot;,
+          &quot;sha256&quot;: &quot;ff361d54815a8ba81632458e45dbe3466c563d7a81b83100f879bb56eb718fd6&quot;
+        },
+        {
+          &quot;document&quot;: &quot;missing_evidence.pdf&quot;,
+          &quot;page&quot;: 2,
+          &quot;quote&quot;: &quot;proposal.valid_until = 2026-12-31&quot;,
+          &quot;sha256&quot;: &quot;ff361d54815a8ba81632458e45dbe3466c563d7a81b83100f879bb56eb718fd6&quot;
+        },
+        {
+          &quot;document&quot;: &quot;missing_evidence.pdf&quot;,
+          &quot;page&quot;: 2,
+          &quot;quote&quot;: &quot;proposal.freight = included&quot;,
+          &quot;sha256&quot;: &quot;ff361d54815a8ba81632458e45dbe3466c563d7a81b83100f879bb56eb718fd6&quot;
+        },
+        {
+          &quot;document&quot;: &quot;missing_evidence.pdf&quot;,
+          &quot;page&quot;: 3,
+          &quot;quote&quot;: &quot;as_of = 2026-11-09&quot;,
+          &quot;sha256&quot;: &quot;ff361d54815a8ba81632458e45dbe3466c563d7a81b83100f879bb56eb718fd6&quot;
+        },
+        {
+          &quot;document&quot;: &quot;missing_evidence.pdf&quot;,
+          &quot;page&quot;: 3,
+          &quot;quote&quot;: &quot;annual_volume = 10000&quot;,
+          &quot;sha256&quot;: &quot;ff361d54815a8ba81632458e45dbe3466c563d7a81b83100f879bb56eb718fd6&quot;
+        },
+        {
+          &quot;document&quot;: &quot;missing_evidence.pdf&quot;,
+          &quot;page&quot;: 3,
+          &quot;quote&quot;: &quot;assumption = Baseline price moves proportionally with the declared index basket.&quot;,
+          &quot;sha256&quot;: &quot;ff361d54815a8ba81632458e45dbe3466c563d7a81b83100f879bb56eb718fd6&quot;
+        },
+        {
+          &quot;document&quot;: &quot;missing_evidence.pdf&quot;,
+          &quot;page&quot;: 3,
+          &quot;quote&quot;: &quot;assumption = Cost shares are assumed; margin, FX, hedging and productivity are held constant.&quot;,
+          &quot;sha256&quot;: &quot;ff361d54815a8ba81632458e45dbe3466c563d7a81b83100f879bb56eb718fd6&quot;
+        },
+        {
+          &quot;document&quot;: &quot;missing_evidence.pdf&quot;,
+          &quot;page&quot;: 3,
+          &quot;quote&quot;: &quot;assumption = Annual volume is an illustration, not committed demand or realised savings.&quot;,
+          &quot;sha256&quot;: &quot;ff361d54815a8ba81632458e45dbe3466c563d7a81b83100f879bb56eb718fd6&quot;
+        },
+        {
+          &quot;document&quot;: &quot;missing_evidence.pdf&quot;,
+          &quot;page&quot;: 3,
+          &quot;quote&quot;: &quot;driver.materials = share:0.50; baseline_index:100; current_index:106; baseline_period:2026-01-01; current_period:2026-10-01&quot;,
+          &quot;sha256&quot;: &quot;ff361d54815a8ba81632458e45dbe3466c563d7a81b83100f879bb56eb718fd6&quot;
+        },
+        {
+          &quot;document&quot;: &quot;missing_evidence.pdf&quot;,
+          &quot;page&quot;: 3,
+          &quot;quote&quot;: &quot;driver.energy = share:0.20; baseline_index:100; current_index:UNKNOWN; baseline_period:2026-01-01; current_period:2026-10-01&quot;,
+          &quot;sha256&quot;: &quot;ff361d54815a8ba81632458e45dbe3466c563d7a81b83100f879bb56eb718fd6&quot;
+        },
+        {
+          &quot;document&quot;: &quot;missing_evidence.pdf&quot;,
+          &quot;page&quot;: 3,
+          &quot;quote&quot;: &quot;driver.labour = share:0.20; baseline_index:100; current_index:104; baseline_period:2026-01-01; current_period:2026-10-01&quot;,
+          &quot;sha256&quot;: &quot;ff361d54815a8ba81632458e45dbe3466c563d7a81b83100f879bb56eb718fd6&quot;
+        },
+        {
+          &quot;document&quot;: &quot;missing_evidence.pdf&quot;,
+          &quot;page&quot;: 3,
+          &quot;quote&quot;: &quot;driver.freight = share:0.10; baseline_index:100; current_index:105; baseline_period:2026-01-01; current_period:2026-10-01&quot;,
+          &quot;sha256&quot;: &quot;ff361d54815a8ba81632458e45dbe3466c563d7a81b83100f879bb56eb718fd6&quot;
+        }
+      ],
+      &quot;extraction_mode&quot;: &quot;template&quot;,
+      &quot;evidence_validation&quot;: &quot;quotations_matched_to_source_text&quot;,
+      &quot;limitations&quot;: [
+        &quot;This is a conditional index-basket scenario, not a verified supplier should-cost estimate.&quot;,
+        &quot;The gap is a discussion point, not evidence of overcharging or a saving achieved.&quot;,
+        &quot;Shares, indices and annual volume are supplied inputs; their commercial validity requires human review.&quot;,
+        &quot;The model assumes the baseline price moves proportionally with the declared basket; margin, hedging, productivity, contracts and FX may change the result.&quot;,
+        &quot;Evidence excerpts establish traceability, not independent verification or semantic correctness.&quot;
+      ],
+      &quot;processing_ms&quot;: 6.89
+    }
+  },
+  {
+    &quot;case&quot;: &quot;scope_mismatch&quot;,
+    &quot;http_status&quot;: 200,
+    &quot;response&quot;: {
+      &quot;review_id&quot;: &quot;review_f7ddab1df3864180&quot;,
+      &quot;request_id&quot;: &quot;d496200a01cb4f12b2b70f31a416ee42&quot;,
+      &quot;analysis_fingerprint&quot;: &quot;f7ddab1df3864180bc1f11dbfe5b49dae47f2aacaea1180b631d660258213ce6&quot;,
+      &quot;model_version&quot;: &quot;declared-index-basket/1.0&quot;,
+      &quot;status&quot;: &quot;not_comparable&quot;,
+      &quot;summary&quot;: &quot;Calculation withheld: quote scopes differ.&quot;,
+      &quot;issues&quot;: [
+        {
+          &quot;code&quot;: &quot;scope_mismatch&quot;,
+          &quot;message&quot;: &quot;Revision differs between baseline and proposal.&quot;,
+          &quot;field&quot;: &quot;revision&quot;
+        }
+      ],
+      &quot;calculation&quot;: null,
+      &quot;questions&quot;: [
+        &quot;Revision differs between baseline and proposal.&quot;
+      ],
+      &quot;assumptions&quot;: [
+        &quot;Baseline price moves proportionally with the declared index basket.&quot;,
+        &quot;Cost shares are assumed; margin, FX, hedging and productivity are held constant.&quot;,
+        &quot;Annual volume is an illustration, not committed demand or realised savings.&quot;
+      ],
+      &quot;evidence&quot;: [
+        {
+          &quot;document&quot;: &quot;scope_mismatch.pdf&quot;,
+          &quot;page&quot;: 1,
+          &quot;quote&quot;: &quot;baseline.supplier = Fictional Northbridge Components&quot;,
+          &quot;sha256&quot;: &quot;4a3082ee18e401aeefb0daea9637a783670acfef4a7d19eee407a886b671057e&quot;
+        },
+        {
+          &quot;document&quot;: &quot;scope_mismatch.pdf&quot;,
+          &quot;page&quot;: 1,
+          &quot;quote&quot;: &quot;baseline.sku = PANEL-100&quot;,
+          &quot;sha256&quot;: &quot;4a3082ee18e401aeefb0daea9637a783670acfef4a7d19eee407a886b671057e&quot;
+        },
+        {
+          &quot;document&quot;: &quot;scope_mismatch.pdf&quot;,
+          &quot;page&quot;: 1,
+          &quot;quote&quot;: &quot;baseline.revision = A&quot;,
+          &quot;sha256&quot;: &quot;4a3082ee18e401aeefb0daea9637a783670acfef4a7d19eee407a886b671057e&quot;
+        },
+        {
+          &quot;document&quot;: &quot;scope_mismatch.pdf&quot;,
+          &quot;page&quot;: 1,
+          &quot;quote&quot;: &quot;baseline.currency = GBP&quot;,
+          &quot;sha256&quot;: &quot;4a3082ee18e401aeefb0daea9637a783670acfef4a7d19eee407a886b671057e&quot;
+        },
+        {
+          &quot;document&quot;: &quot;scope_mismatch.pdf&quot;,
+          &quot;page&quot;: 1,
+          &quot;quote&quot;: &quot;baseline.unit = piece&quot;,
+          &quot;sha256&quot;: &quot;4a3082ee18e401aeefb0daea9637a783670acfef4a7d19eee407a886b671057e&quot;
+        },
+        {
+          &quot;document&quot;: &quot;scope_mismatch.pdf&quot;,
+          &quot;page&quot;: 1,
+          &quot;quote&quot;: &quot;baseline.quantity = 1000&quot;,
+          &quot;sha256&quot;: &quot;4a3082ee18e401aeefb0daea9637a783670acfef4a7d19eee407a886b671057e&quot;
+        },
+        {
+          &quot;document&quot;: &quot;scope_mismatch.pdf&quot;,
+          &quot;page&quot;: 1,
+          &quot;quote&quot;: &quot;baseline.unit_price = 100.00&quot;,
+          &quot;sha256&quot;: &quot;4a3082ee18e401aeefb0daea9637a783670acfef4a7d19eee407a886b671057e&quot;
+        },
+        {
+          &quot;document&quot;: &quot;scope_mismatch.pdf&quot;,
+          &quot;page&quot;: 1,
+          &quot;quote&quot;: &quot;baseline.quote_date = 2026-01-01&quot;,
+          &quot;sha256&quot;: &quot;4a3082ee18e401aeefb0daea9637a783670acfef4a7d19eee407a886b671057e&quot;
+        },
+        {
+          &quot;document&quot;: &quot;scope_mismatch.pdf&quot;,
+          &quot;page&quot;: 1,
+          &quot;quote&quot;: &quot;baseline.valid_until = 2026-02-01&quot;,
+          &quot;sha256&quot;: &quot;4a3082ee18e401aeefb0daea9637a783670acfef4a7d19eee407a886b671057e&quot;
+        },
+        {
+          &quot;document&quot;: &quot;scope_mismatch.pdf&quot;,
+          &quot;page&quot;: 1,
+          &quot;quote&quot;: &quot;baseline.freight = included&quot;,
+          &quot;sha256&quot;: &quot;4a3082ee18e401aeefb0daea9637a783670acfef4a7d19eee407a886b671057e&quot;
+        },
+        {
+          &quot;document&quot;: &quot;scope_mismatch.pdf&quot;,
+          &quot;page&quot;: 2,
+          &quot;quote&quot;: &quot;proposal.supplier = Fictional Northbridge Components&quot;,
+          &quot;sha256&quot;: &quot;4a3082ee18e401aeefb0daea9637a783670acfef4a7d19eee407a886b671057e&quot;
+        },
+        {
+          &quot;document&quot;: &quot;scope_mismatch.pdf&quot;,
+          &quot;page&quot;: 2,
+          &quot;quote&quot;: &quot;proposal.sku = PANEL-100&quot;,
+          &quot;sha256&quot;: &quot;4a3082ee18e401aeefb0daea9637a783670acfef4a7d19eee407a886b671057e&quot;
+        },
+        {
+          &quot;document&quot;: &quot;scope_mismatch.pdf&quot;,
+          &quot;page&quot;: 2,
+          &quot;quote&quot;: &quot;proposal.revision = B&quot;,
+          &quot;sha256&quot;: &quot;4a3082ee18e401aeefb0daea9637a783670acfef4a7d19eee407a886b671057e&quot;
+        },
+        {
+          &quot;document&quot;: &quot;scope_mismatch.pdf&quot;,
+          &quot;page&quot;: 2,
+          &quot;quote&quot;: &quot;proposal.currency = GBP&quot;,
+          &quot;sha256&quot;: &quot;4a3082ee18e401aeefb0daea9637a783670acfef4a7d19eee407a886b671057e&quot;
+        },
+        {
+          &quot;document&quot;: &quot;scope_mismatch.pdf&quot;,
+          &quot;page&quot;: 2,
+          &quot;quote&quot;: &quot;proposal.unit = piece&quot;,
+          &quot;sha256&quot;: &quot;4a3082ee18e401aeefb0daea9637a783670acfef4a7d19eee407a886b671057e&quot;
+        },
+        {
+          &quot;document&quot;: &quot;scope_mismatch.pdf&quot;,
+          &quot;page&quot;: 2,
+          &quot;quote&quot;: &quot;proposal.quantity = 1000&quot;,
+          &quot;sha256&quot;: &quot;4a3082ee18e401aeefb0daea9637a783670acfef4a7d19eee407a886b671057e&quot;
+        },
+        {
+          &quot;document&quot;: &quot;scope_mismatch.pdf&quot;,
+          &quot;page&quot;: 2,
+          &quot;quote&quot;: &quot;proposal.unit_price = 112.00&quot;,
+          &quot;sha256&quot;: &quot;4a3082ee18e401aeefb0daea9637a783670acfef4a7d19eee407a886b671057e&quot;
+        },
+        {
+          &quot;document&quot;: &quot;scope_mismatch.pdf&quot;,
+          &quot;page&quot;: 2,
+          &quot;quote&quot;: &quot;proposal.quote_date = 2026-11-01&quot;,
+          &quot;sha256&quot;: &quot;4a3082ee18e401aeefb0daea9637a783670acfef4a7d19eee407a886b671057e&quot;
+        },
+        {
+          &quot;document&quot;: &quot;scope_mismatch.pdf&quot;,
+          &quot;page&quot;: 2,
+          &quot;quote&quot;: &quot;proposal.valid_until = 2026-12-31&quot;,
+          &quot;sha256&quot;: &quot;4a3082ee18e401aeefb0daea9637a783670acfef4a7d19eee407a886b671057e&quot;
+        },
+        {
+          &quot;document&quot;: &quot;scope_mismatch.pdf&quot;,
+          &quot;page&quot;: 2,
+          &quot;quote&quot;: &quot;proposal.freight = included&quot;,
+          &quot;sha256&quot;: &quot;4a3082ee18e401aeefb0daea9637a783670acfef4a7d19eee407a886b671057e&quot;
+        },
+        {
+          &quot;document&quot;: &quot;scope_mismatch.pdf&quot;,
+          &quot;page&quot;: 3,
+          &quot;quote&quot;: &quot;as_of = 2026-11-09&quot;,
+          &quot;sha256&quot;: &quot;4a3082ee18e401aeefb0daea9637a783670acfef4a7d19eee407a886b671057e&quot;
+        },
+        {
+          &quot;document&quot;: &quot;scope_mismatch.pdf&quot;,
+          &quot;page&quot;: 3,
+          &quot;quote&quot;: &quot;annual_volume = 10000&quot;,
+          &quot;sha256&quot;: &quot;4a3082ee18e401aeefb0daea9637a783670acfef4a7d19eee407a886b671057e&quot;
+        },
+        {
+          &quot;document&quot;: &quot;scope_mismatch.pdf&quot;,
+          &quot;page&quot;: 3,
+          &quot;quote&quot;: &quot;assumption = Baseline price moves proportionally with the declared index basket.&quot;,
+          &quot;sha256&quot;: &quot;4a3082ee18e401aeefb0daea9637a783670acfef4a7d19eee407a886b671057e&quot;
+        },
+        {
+          &quot;document&quot;: &quot;scope_mismatch.pdf&quot;,
+          &quot;page&quot;: 3,
+          &quot;quote&quot;: &quot;assumption = Cost shares are assumed; margin, FX, hedging and productivity are held constant.&quot;,
+          &quot;sha256&quot;: &quot;4a3082ee18e401aeefb0daea9637a783670acfef4a7d19eee407a886b671057e&quot;
+        },
+        {
+          &quot;document&quot;: &quot;scope_mismatch.pdf&quot;,
+          &quot;page&quot;: 3,
+          &quot;quote&quot;: &quot;assumption = Annual volume is an illustration, not committed demand or realised savings.&quot;,
+          &quot;sha256&quot;: &quot;4a3082ee18e401aeefb0daea9637a783670acfef4a7d19eee407a886b671057e&quot;
+        },
+        {
+          &quot;document&quot;: &quot;scope_mismatch.pdf&quot;,
+          &quot;page&quot;: 3,
+          &quot;quote&quot;: &quot;driver.materials = share:0.50; baseline_index:100; current_index:106; baseline_period:2026-01-01; current_period:2026-10-01&quot;,
+          &quot;sha256&quot;: &quot;4a3082ee18e401aeefb0daea9637a783670acfef4a7d19eee407a886b671057e&quot;
+        },
+        {
+          &quot;document&quot;: &quot;scope_mismatch.pdf&quot;,
+          &quot;page&quot;: 3,
+          &quot;quote&quot;: &quot;driver.energy = share:0.20; baseline_index:100; current_index:90; baseline_period:2026-01-01; current_period:2026-10-01&quot;,
+          &quot;sha256&quot;: &quot;4a3082ee18e401aeefb0daea9637a783670acfef4a7d19eee407a886b671057e&quot;
+        },
+        {
+          &quot;document&quot;: &quot;scope_mismatch.pdf&quot;,
+          &quot;page&quot;: 3,
+          &quot;quote&quot;: &quot;driver.labour = share:0.20; baseline_index:100; current_index:104; baseline_period:2026-01-01; current_period:2026-10-01&quot;,
+          &quot;sha256&quot;: &quot;4a3082ee18e401aeefb0daea9637a783670acfef4a7d19eee407a886b671057e&quot;
+        },
+        {
+          &quot;document&quot;: &quot;scope_mismatch.pdf&quot;,
+          &quot;page&quot;: 3,
+          &quot;quote&quot;: &quot;driver.freight = share:0.10; baseline_index:100; current_index:105; baseline_period:2026-01-01; current_period:2026-10-01&quot;,
+          &quot;sha256&quot;: &quot;4a3082ee18e401aeefb0daea9637a783670acfef4a7d19eee407a886b671057e&quot;
+        }
+      ],
+      &quot;extraction_mode&quot;: &quot;template&quot;,
+      &quot;evidence_validation&quot;: &quot;quotations_matched_to_source_text&quot;,
+      &quot;limitations&quot;: [
+        &quot;This is a conditional index-basket scenario, not a verified supplier should-cost estimate.&quot;,
+        &quot;The gap is a discussion point, not evidence of overcharging or a saving achieved.&quot;,
+        &quot;Shares, indices and annual volume are supplied inputs; their commercial validity requires human review.&quot;,
+        &quot;The model assumes the baseline price moves proportionally with the declared basket; margin, hedging, productivity, contracts and FX may change the result.&quot;,
+        &quot;Evidence excerpts establish traceability, not independent verification or semantic correctness.&quot;
+      ],
+      &quot;processing_ms&quot;: 7.622
+    }
+  }
+]</pre></div></details>
+</section>
+</main><footer><div><span class="footer-brand">SENONI</span> · Sourcing evidence API · Independent prototype</div><div>Developed with AI assistance. Human review remains essential.</div></footer></body></html>

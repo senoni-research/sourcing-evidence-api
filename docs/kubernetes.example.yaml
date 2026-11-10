@@ -1,0 +1,49 @@
+# Deployment contract only: not deployed or validated against a cluster.
+# Build/push your image and create sourcing-evidence-secrets separately.
+# Configure ingress TLS/auth, an upload parsing worker and network policies before public exposure.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sourcing-evidence
+spec:
+  replicas: 1
+  selector:
+    matchLabels: {app: sourcing-evidence}
+  template:
+    metadata:
+      labels: {app: sourcing-evidence}
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 10001
+        fsGroup: 10001
+      containers:
+        - name: api
+          image: YOUR_REGISTRY/sourcing-evidence:0.1.0
+          ports: [{containerPort: 8000}]
+          env:
+            - {name: APP_ENV, value: production}
+            - {name: EXTRACTOR_MODE, value: template}
+            - name: SERVICE_API_KEY
+              valueFrom:
+                secretKeyRef: {name: sourcing-evidence-secrets, key: api-key}
+          readinessProbe:
+            httpGet: {path: /health/ready, port: 8000}
+          livenessProbe:
+            httpGet: {path: /health/live, port: 8000}
+          resources:
+            requests: {cpu: 100m, memory: 128Mi}
+            limits: {cpu: '1', memory: 512Mi}
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities: {drop: [ALL]}
+          volumeMounts: [{name: temporary, mountPath: /tmp}]
+      volumes: [{name: temporary, emptyDir: {sizeLimit: 16Mi}}]
+---
+apiVersion: v1
+kind: Service
+metadata: {name: sourcing-evidence}
+spec:
+  selector: {app: sourcing-evidence}
+  ports: [{port: 8000, targetPort: 8000}]

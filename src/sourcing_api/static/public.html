@@ -1,0 +1,952 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<meta name="description" content="A fictional supplier price-increase review: source evidence beside each disputed fact, justified reviewer overrides, and a clearly separate what-if comparison.">
+<title>SENONI · Sourcing evidence review</title>
+<link rel="icon" href="data:,">
+<style>
+:root {
+  --paper: #f4f4ee; --card: #fffefa; --ink: #17313d; --muted: #51636c; --line: #d3dbd1;
+  --teal: #0f5f56; --teal-soft: #e0efe7; --amber: #7a4f10; --amber-soft: #f9edd6;
+  --red: #8f3a2e; --red-soft: #f9e6df; --blue: #23527c; --blue-soft: #e4eef7;
+  --radius: 12px; --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--paper); color: var(--ink); font: 16px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+h1, h2, h3, h4, p, dl, dd, ol, ul { margin: 0; }
+ol, ul { padding: 0; list-style: none; }
+button, input, textarea, select { font: inherit; color: inherit; }
+button { cursor: pointer; }
+button:disabled, input:disabled, textarea:disabled { cursor: not-allowed; opacity: .55; }
+a { color: var(--teal); }
+[hidden] { display: none !important; }
+:focus-visible { outline: 3px solid #0b3f8a; outline-offset: 2px; border-radius: 4px; }
+[tabindex="-1"]:focus { outline: 3px solid #0b3f8a; outline-offset: 4px; border-radius: 4px; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; }
+.skip { position: absolute; left: -999px; top: 8px; background: var(--ink); color: #fff; padding: 8px 12px; border-radius: 6px; z-index: 10; }
+.skip:focus { left: 8px; }
+.wrap { width: min(1400px, calc(100% - 40px)); margin: 0 auto; }
+
+/* Top bar */
+.topbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding: 14px 0; border-bottom: 1px solid var(--line); }
+.brand { display: flex; align-items: center; gap: 10px; font-weight: 700; letter-spacing: 2px; }
+.mark { width: 30px; height: 30px; border: 1px solid var(--ink); border-radius: 50%; display: grid; place-items: center; font: 19px Georgia, serif; letter-spacing: 0; }
+.brand span.sub { font-weight: 400; letter-spacing: 0; color: var(--muted); font-size: 14px; border-left: 1px solid var(--line); padding-left: 10px; }
+.mode { font-size: 14px; color: var(--muted); background: #e9ece2; border: 1px solid var(--line); border-radius: 999px; padding: 4px 12px; }
+.switch { display: inline-flex; border: 1px solid var(--ink); border-radius: 8px; overflow: hidden; }
+.switch button { border: 0; background: var(--card); padding: 7px 14px; font-size: 14px; font-weight: 600; min-height: 38px; }
+.switch button[aria-pressed="true"] { background: var(--ink); color: #fff; }
+
+/* Alerts */
+.alert { margin: 14px 0 0; padding: 12px 16px; border-radius: 10px; border: 1px solid #dfb9ad; background: var(--red-soft); color: #6f2c22; display: flex; gap: 12px; align-items: flex-start; flex-wrap: wrap; }
+.alert p { flex: 1 1 320px; white-space: pre-wrap; }
+.alert.info { border-color: #b9cfe3; background: var(--blue-soft); color: #1d4266; }
+
+/* Buttons and chips */
+.btn { border: 1px solid #9fb0a6; background: var(--card); border-radius: 8px; padding: 8px 14px; font-size: 15px; font-weight: 600; min-height: 40px; }
+.btn:hover:not(:disabled) { border-color: var(--ink); }
+.btn.primary { background: var(--teal); border-color: var(--teal); color: #fff; }
+.btn.primary:hover:not(:disabled) { background: #0a4a43; }
+.btn.danger { border-color: var(--red); color: var(--red); }
+.btn.small { font-size: 14px; padding: 4px 10px; min-height: 32px; font-weight: 500; }
+.linkish { border: 0; background: none; padding: 0; color: var(--teal); text-decoration: underline; font-size: inherit; font-weight: 600; }
+.chip { display: inline-flex; align-items: center; gap: 6px; padding: 2px 10px; border-radius: 999px; font-size: 13px; font-weight: 650; border: 1px solid transparent; white-space: nowrap; }
+.chip.ok { background: var(--teal-soft); color: var(--teal); border-color: #b5d6c6; }
+.chip.warn { background: var(--amber-soft); color: var(--amber); border-color: #e6cf9f; }
+.chip.bad { background: var(--red-soft); color: var(--red); border-color: #e3bdb1; }
+.chip.hyp { background: var(--blue-soft); color: var(--blue); border-color: #b9cfe3; }
+.chip.neutral { background: #eceee6; color: var(--muted); border-color: var(--line); }
+
+/* Case header */
+.case-header { padding: 16px 0 14px; }
+.cases { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
+.case { text-align: left; background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 8px 12px; display: grid; gap: 4px; min-width: 0; }
+.case strong { font-size: 15px; }
+.case[aria-pressed="true"] { border-color: var(--teal); box-shadow: inset 0 0 0 1px var(--teal); background: var(--teal-soft); }
+.case-header h1 { font: 400 32px/1.15 Georgia, "Times New Roman", serif; letter-spacing: -.6px; }
+.strip { display: flex; flex-wrap: wrap; gap: 10px 28px; margin-top: 12px; }
+.strip div { min-width: 0; }
+.strip dt { font-size: 13px; color: var(--muted); text-transform: uppercase; letter-spacing: .6px; }
+.strip dd { font-size: 16px; font-weight: 600; }
+.strip dd .flag { color: var(--red); }
+.strip dd small { font-weight: 400; font-size: 14px; color: var(--muted); }
+
+/* Workspace */
+.pane-tabs { display: none; margin-bottom: 10px; }
+.workspace { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 18px; align-items: start; }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); min-width: 0; }
+.card-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; padding: 12px 16px; border-bottom: 1px solid var(--line); }
+.card-head h2 { font-size: 18px; }
+.card-head .aside { font-size: 14px; color: var(--muted); }
+.card-body { padding: 16px; }
+.source { position: sticky; top: 10px; max-height: calc(100vh - 20px); display: flex; flex-direction: column; }
+.page-tabs { display: flex; gap: 6px; flex-wrap: wrap; padding: 10px 16px 0; }
+.page-tab { border: 1px solid var(--line); border-bottom: 0; background: #eceee6; border-radius: 8px 8px 0 0; padding: 6px 10px; font-size: 14px; }
+.page-tab[aria-pressed="true"] { background: var(--card); border-color: var(--ink); font-weight: 700; }
+.page-tab .dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--red); margin-left: 6px; }
+.page { border-top: 1px solid var(--ink); margin: 0 16px; padding: 10px 0; overflow: auto; flex: 1 1 auto; min-height: 180px; }
+.lines li { display: grid; grid-template-columns: 30px minmax(0, 1fr); align-items: start; }
+.lines .no { font: 13px/1.9 var(--mono); color: #7b8a8f; text-align: right; padding-right: 8px; user-select: none; }
+.line { display: block; width: 100%; text-align: left; border: 0; border-left: 4px solid transparent; background: none; padding: 3px 8px; font: 14px/1.5 var(--mono); white-space: pre-wrap; overflow-wrap: anywhere; border-radius: 0 4px 4px 0; }
+.line:hover { background: #f0f2ea; }
+.line.flagged { border-left-color: var(--red); background: var(--red-soft); }
+.line.overridden { border-left-color: var(--amber); background: var(--amber-soft); }
+.line.cited { border-left-color: var(--teal); background: var(--teal-soft); }
+.line.selected { box-shadow: inset 0 0 0 2px var(--ink); font-weight: 700; }
+.line .tag { display: block; font: 600 13px/1.4 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; margin-top: 2px; }
+.line.flagged .tag { color: var(--red); } .line.overridden .tag { color: var(--amber); } .line.cited .tag { color: var(--teal); }
+.source-foot { padding: 10px 16px 14px; font-size: 14px; color: var(--muted); }
+
+/* Decision */
+.stack { display: grid; gap: 14px; min-width: 0; }
+.block { border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; background: #fbfbf6; }
+.block.issue { border-color: #e3bdb1; background: #fdf4f0; }
+.block.override { border-color: #e6cf9f; background: #fdf7ea; }
+.block h3 { font-size: 17px; margin-bottom: 6px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+.block p + p { margin-top: 6px; }
+.muted { color: var(--muted); font-size: 14px; }
+.numbers { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; margin-top: 12px; }
+.number { padding: 10px 12px; background: var(--card); min-width: 0; }
+.number + .number { border-left: 1px solid var(--line); }
+.number.key { background: var(--teal-soft); }
+.number small { display: block; font-size: 13px; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; }
+.number strong { display: block; font-size: 24px; font-weight: 600; letter-spacing: -.5px; overflow-wrap: anywhere; }
+.number span { font-size: 14px; color: var(--muted); }
+.fact-list { margin-top: 10px; display: grid; gap: 8px; }
+.fact-list li { display: flex; gap: 10px; align-items: center; justify-content: space-between; flex-wrap: wrap; background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 8px 12px; }
+.fact-list b { font-weight: 700; }
+.kv { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 6px 14px; margin-top: 8px; }
+.kv dt { color: var(--muted); font-size: 14px; padding-top: 2px; }
+.kv dd { min-width: 0; overflow-wrap: anywhere; }
+.kv q { font: 14px/1.5 var(--mono); quotes: "“" "”"; }
+.actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px; }
+form .field { display: grid; gap: 4px; margin-top: 12px; }
+form label, form legend { font-size: 15px; font-weight: 650; padding: 0; }
+form .hint { font-size: 14px; color: var(--muted); }
+form input[type="text"], form input[type="number"], form textarea { width: 100%; padding: 9px 10px; border: 1px solid #9fb0a6; border-radius: 8px; background: #fff; font-size: 16px; }
+form input.short { max-width: 180px; }
+form textarea { min-height: 76px; resize: vertical; }
+fieldset { border: 0; padding: 0; margin: 12px 0 0; min-width: 0; }
+.radio { display: flex; gap: 8px; align-items: flex-start; margin-top: 6px; font-size: 15px; font-weight: 400; }
+.radio input { margin-top: 4px; width: 18px; height: 18px; }
+.cite-box { border: 1px dashed #9fb0a6; border-radius: 8px; padding: 10px 12px; margin-top: 8px; background: #fff; }
+.form-error { margin-top: 12px; padding: 10px 12px; border-radius: 8px; background: var(--red-soft); border: 1px solid #e3bdb1; color: #6f2c22; white-space: pre-wrap; }
+details.facts { border: 1px solid var(--line); border-radius: 10px; background: #fbfbf6; }
+details.facts summary { cursor: pointer; padding: 12px 16px; font-weight: 650; }
+.table-scroll { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 15px; }
+th, td { text-align: left; padding: 8px 10px; border-top: 1px solid var(--line); vertical-align: top; }
+thead th { font-size: 13px; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; border-top: 0; font-weight: 600; }
+td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+td.num strong { white-space: nowrap; }
+th .held { display: block; font-weight: 400; text-transform: none; letter-spacing: 0; font-size: 14px; color: var(--muted); }
+tr.group th { background: #eceee6; font-size: 13px; text-transform: uppercase; letter-spacing: .5px; }
+tfoot td, tfoot th { font-weight: 700; }
+
+/* Scenario */
+.section { margin-top: 18px; }
+.scenario-grid { display: grid; grid-template-columns: minmax(260px, 340px) minmax(0, 1fr); gap: 20px; }
+.driver-row { display: grid; grid-template-columns: minmax(0, 1fr) 110px; gap: 4px 10px; align-items: center; margin-top: 10px; }
+.driver-row label { font-weight: 650; font-size: 15px; }
+.driver-row .hint { grid-column: 1 / -1; font-size: 14px; color: var(--muted); }
+.driver-row input { text-align: right; }
+.draft-state { margin-top: 12px; padding: 8px 12px; border-radius: 8px; font-size: 15px; background: #eceee6; }
+.draft-state.dirty { background: var(--amber-soft); color: var(--amber); border: 1px solid #e6cf9f; font-weight: 650; }
+.col-hyp { background: #f3f7fb; }
+.stale .col-hyp { color: #7b8a8f; background: repeating-linear-gradient(135deg, #f6f1e4, #f6f1e4 8px, #fbf8ef 8px, #fbf8ef 16px); }
+.bar { position: relative; height: 10px; background: linear-gradient(to right, transparent calc(50% - 1px), #8c9a9f calc(50% - 1px), #8c9a9f calc(50% + 1px), transparent calc(50% + 1px)); margin-top: 4px; min-width: 90px; }
+.bar i { position: absolute; top: 1px; height: 8px; border-radius: 2px; background: var(--teal); }
+.bar i.neg { background: #b06a1c; }
+.col-hyp .bar i { background: var(--blue); } .col-hyp .bar i.neg { background: #8b6fb0; }
+.blocked-note { padding: 14px 16px; border-radius: 10px; background: #eceee6; border: 1px solid var(--line); }
+h3.sub { font-size: 17px; margin: 18px 0 6px; }
+
+/* History */
+.event { display: grid; grid-template-columns: 54px minmax(0, 1fr); gap: 12px; padding: 12px 0; border-top: 1px solid var(--line); }
+.event:first-child { border-top: 0; }
+.event .ver { font: 600 14px var(--mono); color: var(--muted); }
+.event h4 { font-size: 16px; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.event p { font-size: 15px; margin-top: 3px; overflow-wrap: anywhere; }
+.event time { font-size: 14px; color: var(--muted); }
+
+/* Engineering */
+.eng-head { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; flex-wrap: wrap; margin: 4px 0 12px; }
+.eng-head h2 { font-size: 18px; }
+.eng-head a { font-size: 15px; font-weight: 600; }
+.eng-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; margin-top: 4px; }
+.eng-grid .wide { grid-column: 1 / -1; }
+code, .hash { font: 14px/1.5 var(--mono); overflow-wrap: anywhere; }
+pre { font: 13px/1.5 var(--mono); white-space: pre-wrap; overflow-wrap: anywhere; background: #f0f2ea; border: 1px solid var(--line); border-radius: 8px; padding: 10px; max-height: 380px; overflow: auto; margin-top: 8px; }
+ul.plain { list-style: disc; padding-left: 20px; display: grid; gap: 6px; font-size: 15px; }
+.loading { padding: 48px 16px; text-align: center; color: var(--muted); }
+.footer { margin-top: 26px; padding: 16px 0 28px; border-top: 1px solid var(--line); font-size: 14px; color: var(--muted); display: flex; gap: 12px; justify-content: space-between; flex-wrap: wrap; }
+
+@media (max-width: 980px) {
+  .wrap { width: calc(100% - 24px); }
+  .case-header h1 { font-size: 26px; }
+  .pane-tabs { display: inline-flex; }
+  .workspace { grid-template-columns: minmax(0, 1fr); }
+  .workspace[data-pane="source"] #decision-pane, .workspace[data-pane="decision"] #source-pane { display: none; }
+  .source { position: static; max-height: none; }
+  .scenario-grid, .eng-grid { grid-template-columns: minmax(0, 1fr); }
+  .numbers { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .number:nth-child(3) { border-left: 0; }
+  .number:nth-child(n+3) { border-top: 1px solid var(--line); }
+  .cases { display: grid; grid-template-columns: minmax(0, 1fr); }
+  .kv { grid-template-columns: minmax(0, 1fr); gap: 2px; }
+  .kv dd { margin-bottom: 8px; }
+}
+@media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; transition: none !important; animation: none !important; } }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to the review</a>
+<div class="wrap">
+<header class="topbar">
+  <div class="brand"><span class="mark" aria-hidden="true">s</span>SENONI<span class="sub">Sourcing evidence review</span></div>
+  <span class="mode">FastAPI service · Pydantic contracts · fictional data</span>
+  <div class="switch" role="group" aria-label="View">
+    <button type="button" id="view-review" aria-pressed="true">Review</button>
+    <button type="button" id="view-engineering" aria-pressed="false">Engineering</button>
+  </div>
+</header>
+<div id="live" class="sr-only" role="status" aria-live="polite"></div>
+<div id="alert" class="alert" role="alert" tabindex="-1" hidden>
+  <p id="alert-text"></p>
+  <button type="button" class="btn small" id="alert-action" hidden></button>
+  <button type="button" class="btn small" id="alert-dismiss">Dismiss</button>
+</div>
+
+<main id="main">
+<section class="case-header" aria-labelledby="headline">
+  <nav class="cases" id="cases" aria-label="Fictional cases"></nav>
+  <h1 id="headline" tabindex="-1">Loading the review…</h1>
+  <dl class="strip" id="strip"></dl>
+</section>
+
+<div id="loading" class="card loading">Loading the saved review of this case…</div>
+
+<div id="review-view" hidden>
+  <div class="switch pane-tabs" role="group" aria-label="Workspace pane">
+    <button type="button" id="pane-source" aria-pressed="false">Source document</button>
+    <button type="button" id="pane-decision" aria-pressed="true">Review decision</button>
+  </div>
+  <div class="workspace" id="workspace" data-pane="decision">
+    <section class="card source" id="source-pane" aria-labelledby="source-title">
+      <div class="card-head"><h2 id="source-title">Source document</h2><a id="download" class="aside" href="#">Download this PDF</a></div>
+      <div class="page-tabs" id="page-tabs" role="group" aria-label="Pages of the source document"></div>
+      <div class="page" id="page" role="region" aria-label="Text of the selected page" tabindex="0"><ol class="lines" id="lines"></ol></div>
+      <p class="source-foot" id="source-foot"></p>
+    </section>
+
+    <section class="card" id="decision-pane" aria-labelledby="decision-title">
+      <div class="card-head"><h2 id="decision-title">Review decision</h2><span class="aside" id="decision-aside"></span></div>
+      <div class="card-body stack">
+        <div class="block" id="result"></div>
+        <div id="issues" class="stack"></div>
+        <div class="block override" id="override" hidden></div>
+        <form class="block" id="correction-form" novalidate hidden></form>
+        <form class="block" id="revert-form" novalidate hidden></form>
+        <details class="facts" id="facts"><summary id="facts-summary">All extracted facts</summary><div class="table-scroll"><table><thead><tr><th scope="col">Fact</th><th scope="col">Source document states</th><th scope="col">Review uses</th><th scope="col">Source</th></tr></thead><tbody id="facts-body"></tbody></table></div></details>
+      </div>
+    </section>
+  </div>
+
+  <section class="card section" aria-labelledby="scenario-title">
+    <div class="card-head"><h2 id="scenario-title">Scenario comparison</h2><span class="aside">Reviewed result and hypothetical what-if, side by side</span></div>
+    <div class="card-body" id="scenario"></div>
+  </section>
+
+  <section class="card section" aria-labelledby="history-title">
+    <div class="card-head"><h2 id="history-title">Review history</h2><span class="aside" id="history-use"></span></div>
+    <div class="card-body"><ol id="events"></ol><div id="restart"></div></div>
+  </section>
+</div>
+
+<div id="engineering-view" hidden>
+  <div class="eng-head"><h2>How this review is built</h2><a id="view-source" href="https://github.com/senoni-research/sourcing-evidence-api" target="_blank" rel="noopener">View source</a></div>
+  <div class="eng-grid" id="engineering"></div>
+</div>
+</main>
+
+<footer class="footer"><span><strong>SENONI</strong> · independent engineering demonstration</span><span>No supplier is approved, contacted or paid by anything on this page.</span></footer>
+</div>
+
+<script>
+'use strict';
+const $ = id => document.getElementById(id);
+const DRIVERS = ['materials', 'energy', 'labour', 'freight'];
+const TIMEOUT_MS = 12000;
+
+/* ---------- small DOM helpers: text only, never markup from data ---------- */
+function el(tag, props, ...children) {
+  const node = document.createElement(tag);
+  for (const [key, value] of Object.entries(props || {})) {
+    if (value === undefined || value === null || value === false) continue;
+    if (key === 'class') node.className = value;
+    else if (key === 'text') node.textContent = value;
+    else if (key === 'value') node.value = value;
+    else if (key === 'on') for (const [name, handler] of Object.entries(value)) node.addEventListener(name, handler);
+    else if (key in node && typeof value !== 'string') node[key] = value;
+    else node.setAttribute(key, value === true ? '' : value);
+  }
+  for (const child of children.flat(Infinity)) if (child !== null && child !== undefined && child !== false) node.append(child);
+  return node;
+}
+const money = value => new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }).format(Number(value));
+const trim = value => String(Number(value));
+const cap = text => text.charAt(0).toUpperCase() + text.slice(1);
+const pct = (value, digits = 2) => (Number(value) > 0 ? '+' : Number(value) < 0 ? '−' : '') + Math.abs(Number(value)).toFixed(digits) + '%';
+const pp = value => (Number(value) > 0 ? '+' : Number(value) < 0 ? '−' : '') + Math.abs(Number(value)).toFixed(2) + ' pp';
+const when = value => new Date(value).toLocaleString('en-GB', { dateStyle: 'medium', timeStyle: 'short' });
+const where = ref => 'page ' + ref.page + ', line ' + ref.line;
+const STATUS = { scenario_available: 'scenario available', needs_information: 'calculation withheld — information missing', not_comparable: 'calculation withheld — quotes not comparable' };
+
+/* ---------- state ---------- */
+let view = null;                 // the saved review of the selected case, as returned by the API
+let cases = [];                  // summaries for the case switcher
+// Display order: the complete case first, then the two blocked ones. A link without a hash opens the first.
+const CASE_ORDER = ['price_increase', 'scope_mismatch', 'missing_evidence'];
+let selected = CASE_ORDER.includes(location.hash.slice(1)) ? location.hash.slice(1) : CASE_ORDER[0];
+let busy = false;
+let mode = 'review';
+let shown = { page: 1, line: null };            // which source line is highlighted
+const drafts = {};                               // unsaved entries, kept per case while this page is open
+let lastExchange = null;                         // for the engineering view
+const draft = () => (drafts[selected] ||= { form: null, correction: blankCorrection(), revertReason: '', whatIf: null, restart: false });
+const blankCorrection = () => ({ value: '', basis: '', citation: null, reason: '' });
+
+/* ---------- API with a real timeout ---------- */
+class ApiError extends Error {
+  constructor(code, message, status, problems) { super(message); this.code = code; this.status = status; this.problems = problems || []; }
+}
+async function api(path, method = 'GET', body) {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), TIMEOUT_MS);
+  let response;
+  try {
+    response = await fetch(path, {
+      method, signal: controller.signal, credentials: 'same-origin',
+      headers: body === undefined ? {} : { 'Content-Type': 'application/json' },
+      body: body === undefined ? undefined : JSON.stringify(body),
+    });
+  } catch (error) {
+    if (error.name === 'AbortError') throw new ApiError('timeout', 'The service did not answer within ' + TIMEOUT_MS / 1000 + ' seconds. Nothing on this page was changed. You can try again.', 0);
+    throw new ApiError('network', 'The service could not be reached. Check the connection and try again.', 0);
+  } finally { clearTimeout(timer); }
+  let data = null;
+  try { data = await response.json(); } catch { /* not JSON */ }
+  if (path.startsWith('/demo/') && path !== '/demo/reviews') lastExchange = { method, path, request: body, status: response.status, response: data };
+  if (!response.ok) throw new ApiError(data?.error?.code || 'http_error', data?.error?.message || 'The request could not be completed.', response.status, data?.problems);
+  return data;
+}
+
+function announce(message) { $('live').textContent = ''; setTimeout(() => { $('live').textContent = message; }, 50); }
+function showAlert(message, action, info) {
+  $('alert-text').textContent = message;
+  $('alert').className = 'alert' + (info ? ' info' : '');
+  const button = $('alert-action');
+  button.hidden = !action;
+  if (action) { button.textContent = action.label; button.onclick = action.run; }
+  $('alert').hidden = false;
+  $('alert').focus();
+}
+function clearAlert() { $('alert').hidden = true; }
+function setBusy(value) {
+  busy = value;
+  $('main').setAttribute('aria-busy', String(value));
+  document.querySelectorAll('#main button, #main input, #main textarea, .switch button').forEach(node => {
+    if (value) { node.dataset.wasDisabled = node.disabled ? '1' : ''; node.disabled = true; }
+    else if (node.dataset.wasDisabled !== undefined) { node.disabled = node.dataset.wasDisabled === '1'; delete node.dataset.wasDisabled; }
+  });
+}
+function focusLater(id) { setTimeout(() => { const node = $(id); if (node) node.focus(); }, 0); }
+
+/* ---------- loading and switching ---------- */
+async function loadCases() {
+  try { cases = (await api('/demo/reviews')).cases; } catch { /* the switcher falls back to plain names */ }
+  renderCases();
+}
+function summarise() {
+  const item = cases.find(entry => entry.case === selected);
+  if (item && view) item.review = { version: view.version, status: view.status, has_override: Boolean(view.correction), has_what_if: Boolean(view.what_if), events: view.events.length };
+}
+async function openCase(id, focus) {
+  if (busy) return;
+  selected = id;
+  history.replaceState(null, '', '#' + id);
+  clearAlert();
+  $('loading').hidden = false; $('review-view').hidden = true; $('engineering-view').hidden = true;
+  renderCases();
+  setBusy(true);
+  try {
+    view = await api('/demo/' + id + '/sessions', 'POST');
+    shown = initialSource();
+    render();
+    announce(view.title + ': ' + (view.outcome === 'opened' ? 'new review opened' : 'saved review resumed') + ', version ' + view.version + '. Status: ' + STATUS[view.status] + '.');
+    if (focus) focusLater('headline');
+  } catch (error) { view = null; $('headline').textContent = 'The review could not be loaded'; $('strip').replaceChildren(); fail(error); }
+  finally { setBusy(false); $('loading').hidden = true; }
+}
+async function reloadLatest() {
+  view = await api('/demo/' + selected + '/session');
+  render();
+}
+function initialSource() {
+  const blocked = view.facts.filter(fact => fact.blocking && fact.source);
+  const first = blocked.find(fact => fact.field === view.correctable_field) || blocked[0];
+  if (first) return { page: first.source.page, line: first.source.line };
+  if (view.correction) { const fact = factOf(view.correction.field); if (fact?.source) return { page: fact.source.page, line: fact.source.line }; }
+  return { page: 2, line: null };
+}
+const factOf = field => view.facts.find(fact => fact.field === field);
+
+/* ---------- error handling with a recovery path for every case ---------- */
+async function fail(error, formError) {
+  if (error.code === 'stale_review') {
+    try { await reloadLatest(); } catch { /* keep the alert below */ }
+    showAlert('This review was changed in another tab or window, so your change was not saved. The latest saved version (version ' + (view ? view.version : '?') + ') is now shown. Anything you had typed is still in the form — check it against the latest version and submit again if it is still needed.', null, true);
+    return;
+  }
+  if (error.code === 'history_full') {
+    showAlert(error.message, { label: 'Restart this case', run: () => { clearAlert(); draft().restart = true; renderHistory(); focusLater('restart-confirm'); } });
+    return;
+  }
+  if (error.code === 'stored_review_invalid') {
+    showAlert(error.message, { label: 'Restart this case', run: () => restartCase(true) });
+    return;
+  }
+  if (error.code === 'review_not_found' && view) {
+    showAlert('This saved review has expired or is no longer available. Reopen the case to start it again.', { label: 'Reopen the case', run: () => openCase(selected, true) });
+    return;
+  }
+  const detail = error.problems.length ? '\n' + error.problems.map(problem => '• ' + problem.message.replace(/^Value error, /, '')).join('\n') : '';
+  if (formError && error.status === 422) { formError(error.message + detail); return; }
+  showAlert(error.message + detail, error.status === 0 ? { label: 'Reload the saved review', run: () => openCase(selected, true) } : null);
+}
+async function mutate(path, body, after, formError) {
+  if (busy || !view) return;
+  clearAlert();
+  setBusy(true);
+  let saved = null, error = null;
+  try { saved = await api('/demo/' + selected + path, 'POST', body); } catch (caught) { error = caught; }
+  setBusy(false);
+  if (error) { await fail(error, formError); return; }
+  view = saved;
+  summarise();
+  after(saved);
+}
+
+/* ---------- rendering ---------- */
+function render() {
+  $('review-view').hidden = mode !== 'review';
+  $('engineering-view').hidden = mode !== 'engineering';
+  summarise();
+  renderCases(); renderHeader(); renderSource(); renderDecision(); renderScenario(); renderHistory(); renderEngineering();
+}
+function caseChip(review) {
+  if (!review) return el('span', { class: 'chip neutral', text: 'Not opened yet' });
+  if (review.status !== 'scenario_available') return el('span', { class: 'chip bad', text: review.has_override ? 'Blocked · override unresolved' : 'Blocked · needs a decision' });
+  return el('span', { class: 'chip ' + (review.has_override ? 'warn' : 'ok'), text: (review.has_override ? 'Resolved by reviewer override' : 'Complete evidence') + (review.has_what_if ? ' · what-if saved' : '') });
+}
+function renderCases() {
+  const names = { scope_mismatch: 'Specification changed', missing_evidence: 'Missing energy index', price_increase: 'Price increase · complete evidence' };
+  const list = (cases.length ? [...cases] : Object.keys(names).map(id => ({ case: id, title: names[id], review: null })))
+    .sort((a, b) => CASE_ORDER.indexOf(a.case) - CASE_ORDER.indexOf(b.case));
+  $('cases').replaceChildren(...list.map(item => el('button', {
+    type: 'button', class: 'case', 'aria-pressed': String(item.case === selected),
+    on: { click: () => { if (item.case !== selected) openCase(item.case, true); } },
+  }, el('strong', { text: item.title }), caseChip(item.review))));
+}
+function renderHeader() {
+  const h = view.header;
+  $('headline').textContent = h.proposed_change_pct === null ? 'Review a supplier’s price change' : 'Review a supplier’s ' + trim(h.proposed_change_pct) + '% price ' + (Number(h.proposed_change_pct) >= 0 ? 'increase' : 'decrease');
+  const mismatch = h.baseline_revision !== h.proposal_revision_effective;
+  const revision = el('dd', {}, 'Baseline ' + (h.baseline_revision ?? 'not stated') + ' · Proposal ',
+    el('span', { class: mismatch ? 'flag' : '', text: h.proposal_revision_source ?? 'not stated' }),
+    h.proposal_revision_source !== h.proposal_revision_effective ? el('small', { text: ' (source) · reviewer uses ' + h.proposal_revision_effective }) : null);
+  const blocked = view.status !== 'scenario_available';
+  $('strip').replaceChildren(
+    el('div', {}, el('dt', { text: 'Supplier' }), el('dd', { text: h.supplier ?? 'Not stated' })),
+    el('div', {}, el('dt', { text: 'Item' }), el('dd', { text: h.item ?? 'Not stated' })),
+    el('div', {}, el('dt', { text: 'Revision' }), revision),
+    el('div', {}, el('dt', { text: 'Quoted price per ' + (h.unit ?? 'unit') }), el('dd', {}, money(h.baseline_price) + ' → ' + money(h.proposed_price), el('small', { text: ' (' + pct(h.proposed_change_pct) + ')' }))),
+    el('div', {}, el('dt', { text: 'Review status' }), el('dd', {}, el('span', { class: 'chip ' + (blocked ? 'bad' : 'ok'), text: blocked ? view.blocking.length + ' blocking issue' + (view.blocking.length === 1 ? '' : 's') + ' · calculation withheld' : 'Scenario available' }))),
+  );
+}
+
+/* Source pane: the page text beside the decision, with the disputed lines marked. */
+function lineMarks(page, line) {
+  const marks = [];
+  for (const fact of view.facts) {
+    if (!fact.source || fact.source.page !== page || fact.source.line !== line) continue;
+    if (fact.blocking) marks.push(['flagged', 'Blocking: ' + fact.label.toLowerCase() + (fact.source_value === null ? ' has no stated value' : ' is ' + fact.source_value)]);
+    else if (fact.origin === 'reviewer') marks.push(['overridden', 'Source value. The reviewer override uses ' + fact.reviewer_value + ' instead']);
+  }
+  const cited = view.correction?.citation;
+  if (cited && cited.page === page && cited.line === line) marks.push(['cited', 'Cited by the reviewer as the basis of the override']);
+  return marks;
+}
+function renderSource() {
+  const pages = view.source.pages;
+  if (shown.page > pages.length) shown = { page: 1, line: null };
+  $('download').href = view.source.download_path;
+  $('page-tabs').replaceChildren(...pages.map(page => {
+    const flagged = page.lines.some((_, index) => lineMarks(page.page, index + 1).some(mark => mark[0] === 'flagged'));
+    return el('button', {
+      type: 'button', class: 'page-tab', id: 'tab-' + page.page, 'aria-pressed': String(page.page === shown.page),
+      on: { click: () => { shown = { page: page.page, line: null }; renderSource(); renderForms(); } },
+    }, page.page + ' · ' + page.title, flagged ? el('span', { class: 'dot', title: 'Contains a blocking fact' }) : null, flagged ? el('span', { class: 'sr-only', text: ' (contains a blocking fact)' }) : null);
+  }));
+  const page = pages[shown.page - 1];
+  $('page').setAttribute('aria-label', 'Text of page ' + page.page + ', ' + page.title);
+  $('lines').replaceChildren(...page.lines.map((text, index) => {
+    const number = index + 1, marks = lineMarks(page.page, number), isSelected = shown.line === number;
+    return el('li', {}, el('span', { class: 'no', 'aria-hidden': 'true', text: String(number) }), el('button', {
+      type: 'button', id: 'line-' + number, class: 'line ' + marks.map(mark => mark[0]).join(' ') + (isSelected ? ' selected' : ''), 'aria-pressed': String(isSelected),
+      'aria-label': ['Line ' + number + ': ' + text, ...marks.map(mark => mark[1])].join('. '), disabled: !text,
+      on: { click: () => { shown = { page: page.page, line: number }; renderSource(); renderForms(); focusLater('line-' + number); } },
+    }, text || ' ', marks.map(mark => el('span', { class: 'tag', text: mark[1] }))));
+  }));
+  $('source-foot').textContent = 'Text of page ' + page.page + ' of ' + pages.length + ', as read from the PDF. ' + (page.page > 3 ? 'This page is unstructured: the labelled-template parser does not read it, so nothing on it becomes a fact automatically. ' : '') + 'Select a line to highlight it' + (view.correctable_field ? ' or to cite it in an override.' : '.');
+  const node = shown.line ? $('line-' + shown.line) : null;
+  if (node) node.scrollIntoView({ block: 'nearest' });
+}
+function showSource(ref, focus) {
+  shown = { page: ref.page, line: ref.line };
+  setPane('source');
+  renderSource(); renderForms();
+  if (focus) focusLater('line-' + ref.line);
+}
+const sourceButton = (ref, label) => el('button', { type: 'button', class: 'btn small', text: label || 'Show source · ' + where(ref), on: { click: () => showSource(ref, true) } });
+function setPane(pane) {
+  $('workspace').dataset.pane = pane;
+  $('pane-source').setAttribute('aria-pressed', String(pane === 'source'));
+  $('pane-decision').setAttribute('aria-pressed', String(pane === 'decision'));
+}
+
+/* Decision pane */
+function renderDecision() {
+  const available = view.status === 'scenario_available', c = view.reviewed.calculation;
+  $('decision-aside').textContent = 'Review version ' + view.version;
+  const result = $('result');
+  if (available) {
+    const basis = view.correction ? 'Source facts plus one reviewer override (' + (view.correction.basis === 'cited_passage' ? 'cited passage' : 'reviewer assumption, no supporting passage') + ')' : 'Source facts only — no reviewer override';
+    result.replaceChildren(
+      el('h3', { id: 'result-title', tabindex: '-1' }, 'Reviewed scenario', el('span', { class: 'chip ' + (view.correction ? 'warn' : 'ok'), text: basis })),
+      el('p', { text: 'The declared cost drivers explain ' + pct(c.model_change_pct) + ' of the ' + pct(c.proposed_change_pct) + ' the supplier proposes.' }),
+      el('div', { class: 'numbers' },
+        el('div', { class: 'number' }, el('small', { text: 'Baseline' }), el('strong', { text: money(c.baseline_price) }), el('span', { text: 'per ' + c.unit })),
+        el('div', { class: 'number' }, el('small', { text: 'Supplier proposal' }), el('strong', { text: money(c.proposed_price) }), el('span', { text: pct(c.proposed_change_pct) })),
+        el('div', { class: 'number key' }, el('small', { text: 'Indexed scenario' }), el('strong', { text: money(c.scenario_price) }), el('span', { text: pct(c.model_change_pct) + ' from cost drivers' })),
+        el('div', { class: 'number' }, el('small', { text: 'Difference' }), el('strong', { text: money(c.gap_per_unit) }), el('span', { text: 'per ' + c.unit + ' to discuss' }))),
+      el('p', { class: 'muted', text: 'A conditional index-basket scenario. The difference is a discussion point, not evidence of overcharging and not a saving.' }));
+  } else {
+    result.replaceChildren(
+      el('h3', { id: 'result-title', tabindex: '-1' }, 'No scenario price yet', el('span', { class: 'chip bad', text: 'Calculation withheld' })),
+      el('p', { text: view.status === 'not_comparable' ? 'The two quotations do not describe the same thing, so comparing their prices would mislead.' : 'A required input is not stated, and an unknown value is never treated as zero.' }),
+      el('p', { class: 'muted', text: 'The quoted prices above are observed facts and remain valid. Only the derived scenario is withheld.' }));
+  }
+
+  const issueBlock = (issue, resolved) => el('div', { class: 'block ' + (resolved ? '' : 'issue') },
+    el('h3', resolved ? {} : { id: 'issue-title', tabindex: '-1' }, resolved ? 'Issue resolved by the reviewer override' : 'Blocking issue', el('span', { class: 'chip ' + (resolved ? 'neutral' : 'bad'), text: resolved ? 'Was blocking in the source' : 'Needs your decision' })),
+    el('p', { text: issue.message }),
+    el('ul', { class: 'fact-list' }, issue.fields.map(field => {
+      const fact = factOf(field);
+      return el('li', {}, el('span', {}, fact.label + ': source document states ', el('b', { text: fact.source_value ?? 'no value (UNKNOWN)' }), fact.reviewer_value !== null ? ' · reviewer uses ' : '', fact.reviewer_value !== null ? el('b', { text: fact.reviewer_value }) : null), fact.source ? sourceButton(fact.source) : null);
+    })),
+    !resolved && issue.correctable_field && !view.correction && draft().form !== 'correct'
+      ? el('div', { class: 'actions' }, el('button', { type: 'button', class: 'btn primary', id: 'start-correction', text: 'Record a reviewer override', on: { click: () => openForm('correct') } }))
+      : null,
+    !resolved && !issue.correctable_field ? el('p', { class: 'muted', text: 'This demonstration does not offer an override for this issue.' }) : null);
+  $('issues').replaceChildren(...view.blocking.map(issue => issueBlock(issue, false)), ...view.resolved_by_override.map(issue => issueBlock(issue, true)));
+
+  renderOverride(); renderForms(); renderFacts();
+}
+function renderOverride() {
+  const c = view.correction, box = $('override');
+  box.hidden = !c;
+  if (!c) return;
+  const fact = factOf(c.field);
+  box.replaceChildren(
+    el('h3', { id: 'override-title', tabindex: '-1' }, 'Reviewer override: ' + c.label.toLowerCase(),
+      el('span', { class: 'chip ' + (c.basis === 'cited_passage' ? 'ok' : 'warn'), text: c.basis === 'cited_passage' ? 'Cites a passage' : 'Reviewer assumption' }),
+      c.resolves_review ? null : el('span', { class: 'chip bad', text: 'Does not resolve the issue' })),
+    el('dl', { class: 'kv' },
+      el('dt', { text: 'Source document states' }), el('dd', {}, el('b', { text: c.source_value ?? 'no value (UNKNOWN)' }), ' ', fact?.source ? sourceButton(fact.source, where(fact.source)) : null),
+      el('dt', { text: 'Reviewer asserts' }), el('dd', {}, el('b', { text: c.value })),
+      el('dt', { text: 'Basis' }), el('dd', {}, c.citation
+        ? [el('q', { text: c.citation.quote }), ' ', sourceButton(c.citation, where(c.citation)), el('p', { class: 'muted', text: 'Checked: this line exists in the source document and mentions the asserted value. Not checked: whether it justifies the override — that is the reviewer’s judgement.' })]
+        : el('span', { text: 'No supporting passage. The result is conditional on this unverified reviewer assumption.' })),
+      el('dt', { text: 'Reason given' }), el('dd', { text: c.reason }),
+      el('dt', { text: 'Recorded' }), el('dd', { text: when(c.recorded_at) + ' · review version ' + c.recorded_in_version })),
+    draft().form ? null : el('div', { class: 'actions' },
+      el('button', { type: 'button', class: 'btn', id: 'amend', text: 'Amend override', on: { click: () => openForm('amend') } }),
+      el('button', { type: 'button', class: 'btn danger', id: 'revert', text: 'Revert to source value', on: { click: () => openForm('revert') } })));
+}
+function openForm(kind) {
+  const d = draft();
+  d.form = kind;
+  if (kind === 'amend') {
+    const c = view.correction;
+    d.correction = { value: c.value, basis: c.basis, citation: c.citation ? { page: c.citation.page, line: c.citation.line } : null, reason: c.reason };
+  }
+  renderDecision();
+  focusLater(kind === 'revert' ? 'revert-reason' : 'correction-value');
+}
+function closeForm(focusId) {
+  const d = draft();
+  d.form = null; d.correction = blankCorrection(); d.revertReason = '';
+  renderDecision();
+  focusLater(focusId);
+}
+function renderForms() {
+  if (!view) return;
+  const d = draft(), form = $('correction-form'), revert = $('revert-form');
+  if ((d.form === 'amend' || d.form === 'revert') && !view.correction) d.form = null;
+  if (d.form === 'correct' && view.correction) d.form = null;
+  const editing = d.form === 'correct' || d.form === 'amend';
+  form.hidden = !editing || !view.correctable_field;
+  revert.hidden = d.form !== 'revert';
+
+  if (!form.hidden) {
+    const field = view.correctable_field, fact = factOf(field), isRevision = field === 'proposal.revision', k = d.correction;
+    const line = shown.line ? view.source.pages[shown.page - 1].lines[shown.line - 1] : null;
+    const citedLine = k.citation ? view.source.pages[k.citation.page - 1]?.lines[k.citation.line - 1] : null;
+    const keep = document.activeElement && form.contains(document.activeElement) ? document.activeElement.id : null;
+    form.replaceChildren(
+      el('h3', { text: d.form === 'amend' ? 'Amend the reviewer override' : 'Record a reviewer override' }),
+      el('p', { class: 'muted', text: 'An override never rewrites the source document. It is saved beside the original value with your reason, and can be amended or reverted.' }),
+      el('div', { class: 'field' },
+        el('label', { for: 'correction-value', text: isRevision ? 'Revision the comparison should use for the proposal' : 'Energy current index to use' }),
+        el('span', { class: 'hint', id: 'value-hint', text: 'The source document states ' + (fact.source_value ?? 'no value (UNKNOWN)') + ' on ' + where(fact.source) + '. Nothing is filled in for you.' }),
+        el('input', { type: 'text', id: 'correction-value', class: 'short', autocomplete: 'off', maxlength: isRevision ? '3' : '12', inputmode: isRevision ? 'text' : 'decimal', 'aria-describedby': 'value-hint', value: k.value, on: { input: event => { k.value = event.target.value; } } })),
+      el('fieldset', {}, el('legend', { text: 'What supports this value?' }),
+        el('label', { class: 'radio' }, el('input', { type: 'radio', name: 'basis', id: 'basis-cited', value: 'cited_passage', checked: k.basis === 'cited_passage', on: { change: () => { k.basis = 'cited_passage'; renderForms(); focusLater('basis-cited'); } } }), 'A passage in the source document states it'),
+        el('label', { class: 'radio' }, el('input', { type: 'radio', name: 'basis', id: 'basis-assumption', value: 'reviewer_assumption', checked: k.basis === 'reviewer_assumption', on: { change: () => { k.basis = 'reviewer_assumption'; renderForms(); focusLater('basis-assumption'); } } }), 'Nothing in the document — record it as my assumption'),
+        k.basis === 'cited_passage' ? el('div', { class: 'cite-box' },
+          k.citation ? el('p', {}, 'Cited passage · ' + where(k.citation) + ': ', el('q', { text: citedLine ?? '' })) : el('p', { text: 'No passage cited yet. Select the line in the source document that states the value, then cite it.' }),
+          el('div', { class: 'actions' },
+            el('button', { type: 'button', class: 'btn small', id: 'cite-selected', disabled: !line, text: line ? 'Cite the selected line (' + where(shown) + ')' : 'Select a line in the source document first', on: { click: () => { k.citation = { page: shown.page, line: shown.line }; renderForms(); focusLater('cite-selected'); } } }),
+            el('button', { type: 'button', class: 'btn small', text: 'Go to the source document', on: { click: () => { setPane('source'); focusLater('page'); } } })))
+        : k.basis === 'reviewer_assumption' ? el('p', { class: 'hint', text: 'The result will be labelled as conditional on an unverified reviewer assumption.' }) : null),
+      el('div', { class: 'field' },
+        el('label', { for: 'correction-reason', text: 'Reason for the override' }),
+        el('span', { class: 'hint', id: 'reason-hint', text: 'Required, at least 10 characters. Fictional content only.' }),
+        el('textarea', { id: 'correction-reason', maxlength: '500', 'aria-describedby': 'reason-hint', value: k.reason, on: { input: event => { k.reason = event.target.value; } } })),
+      el('div', { class: 'form-error', id: 'correction-error', role: 'alert', tabindex: '-1', hidden: true }),
+      el('div', { class: 'actions' },
+        el('button', { type: 'submit', class: 'btn primary', text: d.form === 'amend' ? 'Save the amended override' : 'Record override and recalculate' }),
+        el('button', { type: 'button', class: 'btn', text: 'Cancel', on: { click: () => closeForm(view.correction ? 'amend' : 'start-correction') } })));
+    if (keep && $(keep)) $(keep).focus();
+  }
+  if (!revert.hidden) {
+    const c = view.correction;
+    if (!revert.querySelector('#revert-reason')) revert.replaceChildren(
+      el('h3', { text: 'Revert to the source value' }),
+      el('p', { text: 'The review will again use what the source document states (' + (c.source_value ?? 'no value') + '). The override and this revert both stay in the history' + (view.what_if ? ', and the saved what-if is discarded because its basis changes.' : '.') }),
+      el('div', { class: 'field' }, el('label', { for: 'revert-reason', text: 'Reason for reverting' }), el('span', { class: 'hint', id: 'revert-hint', text: 'Required, at least 10 characters.' }),
+        el('textarea', { id: 'revert-reason', maxlength: '500', 'aria-describedby': 'revert-hint', value: d.revertReason, on: { input: event => { d.revertReason = event.target.value; } } })),
+      el('div', { class: 'form-error', id: 'revert-error', role: 'alert', tabindex: '-1', hidden: true }),
+      el('div', { class: 'actions' }, el('button', { type: 'submit', class: 'btn danger', text: 'Revert the override' }), el('button', { type: 'button', class: 'btn', text: 'Cancel', on: { click: () => closeForm('revert') } })));
+  } else revert.replaceChildren();
+}
+function formError(id) { return message => { const box = $(id); box.textContent = message; box.hidden = false; box.focus(); }; }
+$('correction-form').addEventListener('submit', event => {
+  event.preventDefault();
+  const k = draft().correction, problems = [];
+  if (!k.value.trim()) problems.push('Enter the value you are asserting.');
+  if (!k.basis) problems.push('Choose what supports the value.');
+  if (k.basis === 'cited_passage' && !k.citation) problems.push('Cite the passage that states the value, or record the override as your assumption.');
+  if (k.reason.trim().length < 10) problems.push('Give a reason of at least 10 characters.');
+  if (problems.length) { formError('correction-error')(problems.map(text => '• ' + text).join('\n')); return; }
+  const amending = Boolean(view.correction);
+  mutate('/correction', { expected_version: view.version, field: view.correctable_field, value: k.value.trim(), basis: k.basis, citation: k.basis === 'cited_passage' ? k.citation : null, reason: k.reason.trim() }, saved => {
+    const d = draft();
+    d.form = null; d.correction = blankCorrection(); d.whatIf = null;
+    const fact = factOf(saved.correction.field);
+    if (fact?.source) shown = { page: fact.source.page, line: fact.source.line };
+    render();
+    if (saved.outcome === 'no_change') announce('Nothing changed: the review already records exactly this override.');
+    else announce((amending ? 'Override amended. ' : 'Override recorded. ') + (saved.status === 'scenario_available' ? 'Scenario available: ' + money(saved.reviewed.calculation.scenario_price) + '.' : 'The review is still blocked.'));
+    focusLater('override-title');
+  }, formError('correction-error'));
+});
+$('revert-form').addEventListener('submit', event => {
+  event.preventDefault();
+  const d = draft();
+  if (d.revertReason.trim().length < 10) { formError('revert-error')('• Give a reason of at least 10 characters.'); return; }
+  mutate('/correction/revert', { expected_version: view.version, reason: d.revertReason.trim() }, saved => {
+    d.form = null; d.revertReason = ''; d.whatIf = null;
+    shown = initialSource();
+    render();
+    announce('Override reverted. The review uses the source value again. Status: ' + STATUS[saved.status] + '.');
+    focusLater(saved.blocking.length ? 'issue-title' : 'result-title');
+  }, formError('revert-error'));
+});
+function renderFacts() {
+  $('facts-summary').textContent = 'All ' + view.facts.length + ' extracted facts and where each is stated';
+  const groups = { baseline: 'Baseline quotation', proposal: 'Price proposal', drivers: 'Declared cost drivers', review_basis: 'Review basis' };
+  const rows = [];
+  for (const [group, title] of Object.entries(groups)) {
+    rows.push(el('tr', { class: 'group' }, el('th', { colspan: '4', scope: 'colgroup', text: title })));
+    for (const fact of view.facts.filter(item => item.group === group)) rows.push(el('tr', {},
+      el('th', { scope: 'row', text: fact.label }),
+      el('td', {}, fact.source_value ?? el('span', { class: 'chip neutral', text: 'Not stated' }), fact.blocking ? el('span', { class: 'chip bad', text: 'Blocking' }) : null),
+      el('td', {}, fact.effective_value ?? '—', fact.origin === 'reviewer' ? el('span', { class: 'chip warn', text: 'Reviewer override' }) : null),
+      el('td', {}, fact.source ? sourceButton(fact.source, 'p. ' + fact.source.page + ', l. ' + fact.source.line) : '—')));
+  }
+  $('facts-body').replaceChildren(...rows);
+}
+
+/* Scenario comparison: reviewed result, last calculated what-if, and an explicit draft state. */
+function reviewedMovements() {
+  const rows = view.thresholds.find(item => item.basis === 'reviewed').rows;
+  return Object.fromEntries(rows.map(row => [row.driver, trim(row.held_movement_pct)]));
+}
+function whatIfDraft() {
+  const d = draft();
+  if (d.whatIf) return d.whatIf;
+  return view.what_if ? Object.fromEntries(DRIVERS.map(name => [name, trim(view.what_if.changes_pct[name])])) : reviewedMovements();
+}
+const sameInputs = (a, b) => DRIVERS.every(name => a[name] !== '' && Number(a[name]) === Number(b[name]));
+function bar(value, scale) {
+  const width = scale ? Math.min(50, Math.abs(Number(value)) / scale * 50) : 0;
+  return el('div', { class: 'bar', 'aria-hidden': 'true' }, el('i', { class: Number(value) < 0 ? 'neg' : '', style: (Number(value) < 0 ? 'right:50%;' : 'left:50%;') + 'width:' + width + '%' }));
+}
+function renderScenario() {
+  const box = $('scenario');
+  if (!view.what_if_available) {
+    box.replaceChildren(el('div', { class: 'blocked-note' },
+      el('p', {}, el('strong', { text: 'Unavailable while the review is blocked.' })),
+      el('p', { text: 'A what-if needs a reviewed scenario to depart from. ' + (view.blocking.length ? 'Resolve the blocking issue above first: “' + view.blocking[0].message + '”' : '') }),
+      el('div', { class: 'actions' }, el('button', { type: 'button', class: 'btn', disabled: true, text: 'Calculate what-if' }))));
+    return;
+  }
+  const reviewed = view.reviewed.calculation, hyp = view.what_if?.result.calculation || null, base = reviewedMovements(), values = whatIfDraft();
+  const calculated = view.what_if ? Object.fromEntries(DRIVERS.map(name => [name, trim(view.what_if.changes_pct[name])])) : null;
+  const dirty = calculated ? !sameInputs(values, calculated) : !sameInputs(values, base);
+  const stale = Boolean(calculated) && dirty;
+  const scale = Math.max(...reviewed.contributions.map(item => Math.abs(Number(item.contribution_pp))), ...(hyp ? hyp.contributions.map(item => Math.abs(Number(item.contribution_pp))) : [0]), 0.01);
+  const contribution = (calc, name) => calc.contributions.find(item => item.name === name);
+
+  const form = el('form', { id: 'what-if-form', novalidate: true, on: { submit: submitWhatIf } },
+    el('h3', { class: 'sub', style: 'margin-top:0', text: 'Draft what-if assumptions' }),
+    el('p', { class: 'muted', text: 'Hypothetical index movements. Cost shares stay as declared; the reviewed result is never changed by a what-if.' }),
+    DRIVERS.map(name => el('div', { class: 'driver-row' },
+      el('label', { for: 'move-' + name, text: cap(name) + ' index movement, %' }),
+      el('input', { type: 'number', id: 'move-' + name, step: '0.1', min: '-90', max: '200', required: true, value: values[name], 'aria-describedby': 'hint-' + name,
+        on: { input: event => { draft().whatIf = { ...whatIfDraft(), [name]: event.target.value }; updateDraftState(); } } }),
+      el('span', { class: 'hint', id: 'hint-' + name, text: Math.round(Number(contribution(reviewed, name).share) * 100) + '% of the basket · reviewed movement ' + pct(base[name]) }))),
+    el('div', { class: 'draft-state', id: 'draft-state', role: 'status' }),
+    el('div', { class: 'form-error', id: 'what-if-error', role: 'alert', tabindex: '-1', hidden: true }),
+    el('div', { class: 'actions' },
+      el('button', { type: 'submit', class: 'btn primary', id: 'calculate', text: 'Calculate what-if' }),
+      el('button', { type: 'button', class: 'btn', id: 'reset-draft', text: 'Reset draft to reviewed values', on: { click: () => { draft().whatIf = { ...base }; renderScenario(); focusLater('move-materials'); } } }),
+      view.what_if ? el('button', { type: 'button', class: 'btn danger', id: 'discard', text: 'Discard saved what-if', on: { click: discardWhatIf } }) : null));
+
+  const hypHead = hyp ? 'What-if · calculated in version ' + view.what_if.calculated_in_version : 'What-if · not calculated';
+  const table = el('table', { id: 'comparison', class: stale ? 'stale' : '' },
+    el('caption', { class: 'sr-only', text: 'Index movement and contribution of each cost driver, for the reviewed scenario and the last calculated what-if.' }),
+    el('thead', {}, el('tr', {},
+      el('th', { scope: 'col', text: 'Cost driver' }), el('th', { scope: 'col', class: 'num', text: 'Reviewed movement' }), el('th', { scope: 'col', text: 'Reviewed contribution' }),
+      el('th', { scope: 'col', class: 'num col-hyp', text: 'What-if movement' }), el('th', { scope: 'col', class: 'col-hyp', text: 'What-if contribution' }))),
+    el('tbody', {}, DRIVERS.map(name => {
+      const r = contribution(reviewed, name), h = hyp ? contribution(hyp, name) : null;
+      return el('tr', {},
+        el('th', { scope: 'row' }, cap(name), el('div', { class: 'muted', style: 'font-weight:400', text: Math.round(Number(r.share) * 100) + '% share' })),
+        el('td', { class: 'num', text: pct(r.index_change_pct) }), el('td', {}, pp(r.contribution_pp), bar(r.contribution_pp, scale)),
+        el('td', { class: 'num col-hyp', text: h ? pct(h.index_change_pct) : '—' }), el('td', { class: 'col-hyp' }, h ? [pp(h.contribution_pp), bar(h.contribution_pp, scale)] : '—'));
+    })),
+    el('tfoot', {},
+      el('tr', {}, el('th', { scope: 'row', text: 'Total movement explained' }), el('td', {}), el('td', { text: pct(reviewed.model_change_pct) }), el('td', { class: 'col-hyp' }), el('td', { class: 'col-hyp', text: hyp ? pct(hyp.model_change_pct) : '—' })),
+      el('tr', {}, el('th', { scope: 'row', text: 'Scenario price' }), el('td', {}), el('td', { text: money(reviewed.scenario_price) }), el('td', { class: 'col-hyp' }), el('td', { class: 'col-hyp', text: hyp ? money(hyp.scenario_price) : '—' })),
+      el('tr', {}, el('th', { scope: 'row', text: 'Difference to the ' + money(reviewed.proposed_price) + ' proposal' }), el('td', {}), el('td', { text: money(reviewed.gap_per_unit) }), el('td', { class: 'col-hyp' }), el('td', { class: 'col-hyp', text: hyp ? money(hyp.gap_per_unit) : '—' }))));
+
+  const sets = Object.fromEntries(view.thresholds.map(item => [item.basis, item]));
+  const held = set => set.rows.map(row => row.driver + ' ' + pct(row.held_movement_pct, 1)).join(', ');
+  const breakEven = el('table', { id: 'break-even', class: stale ? 'stale' : '' },
+    el('caption', { class: 'sr-only', text: 'Movement in one driver alone that reaches the proposed price, under each set of assumptions.' }),
+    el('thead', {}, el('tr', {}, el('th', { scope: 'col', text: 'If only this driver moved' }),
+      el('th', { scope: 'col', class: 'num' }, 'Others held at reviewed values', el('span', { class: 'held', text: held(sets.reviewed) })),
+      el('th', { scope: 'col', class: 'num col-hyp' }, 'Others held at what-if values', el('span', { class: 'held', text: sets.what_if ? held(sets.what_if) : 'No what-if calculated' })))),
+    el('tbody', {}, DRIVERS.map(name => {
+      const r = sets.reviewed.rows.find(row => row.driver === name), h = sets.what_if?.rows.find(row => row.driver === name);
+      const cell = row => row ? [el('strong', { text: row.required_movement_pct === null ? 'n/a' : pct(row.required_movement_pct) }), el('div', { class: 'muted', text: 'instead of ' + pct(row.held_movement_pct) })] : '—';
+      return el('tr', {}, el('th', { scope: 'row', text: cap(name) }), el('td', { class: 'num' }, cell(r)), el('td', { class: 'num col-hyp' }, cell(h)));
+    })));
+
+  box.replaceChildren(el('div', { class: 'scenario-grid' }, form, el('div', { style: 'min-width:0' },
+    el('h3', { class: 'sub', id: 'comparison-title', tabindex: '-1', style: 'margin-top:0' }, 'Reviewed scenario and what-if', el('span', { class: 'chip hyp', style: 'margin-left:8px', text: hypHead }), stale ? el('span', { class: 'chip warn', id: 'stale-chip', style: 'margin-left:8px', text: 'Stale — the draft has changed' }) : null),
+    el('div', { class: 'table-scroll' }, table),
+    el('h3', { class: 'sub', text: 'What would have to move to reach the ' + money(reviewed.proposed_price) + ' proposal?' }),
+    el('p', { class: 'muted', text: 'Each row changes one driver and holds the other three at the values named in its column. Arithmetic thresholds under this linear model, not forecasts.' }),
+    el('div', { class: 'table-scroll' }, breakEven))));
+  updateDraftState(true);
+}
+function updateDraftState(quiet) {
+  const state = $('draft-state');
+  if (!state || !view.what_if_available) return;
+  const base = reviewedMovements(), values = whatIfDraft();
+  const calculated = view.what_if ? Object.fromEntries(DRIVERS.map(name => [name, trim(view.what_if.changes_pct[name])])) : null;
+  const dirty = calculated ? !sameInputs(values, calculated) : !sameInputs(values, base);
+  const stale = Boolean(calculated) && dirty;
+  state.className = 'draft-state' + (dirty ? ' dirty' : '');
+  state.textContent = !dirty
+    ? (calculated ? 'This draft matches the what-if calculated in version ' + view.what_if.calculated_in_version + '.' : 'This draft equals the reviewed movements. Change one to explore a what-if.')
+    : (calculated ? 'Draft changed and not calculated. The what-if column still shows the earlier inputs — calculate to update it.' : 'Draft changed and not calculated yet.');
+  for (const id of ['comparison', 'break-even']) $(id)?.classList.toggle('stale', stale);
+  if (!quiet) {
+    const title = $('comparison-title'), chip = $('stale-chip');
+    if (stale && !chip) title.append(el('span', { class: 'chip warn', id: 'stale-chip', style: 'margin-left:8px', text: 'Stale — the draft has changed' }));
+    if (!stale && chip) chip.remove();
+  }
+}
+function submitWhatIf(event) {
+  event.preventDefault();
+  const values = whatIfDraft(), problems = [];
+  for (const name of DRIVERS) {
+    const number = Number(values[name]);
+    if (values[name] === '' || !Number.isFinite(number) || number < -90 || number > 200) problems.push('• ' + name + ': enter a movement between −90% and +200%.');
+    else if (Math.abs(Math.round(number * 100) - number * 100) > 1e-6) problems.push('• ' + name + ': use at most two decimal places.');
+  }
+  if (problems.length) { formError('what-if-error')(problems.join('\n')); return; }
+  mutate('/sensitivity', { expected_version: view.version, changes_pct: Object.fromEntries(DRIVERS.map(name => [name, Number(values[name])])) }, saved => {
+    draft().whatIf = null;
+    render();
+    announce(saved.outcome === 'no_change' ? 'Nothing changed: these inputs are already the saved what-if.' : 'What-if calculated: ' + money(saved.what_if.result.calculation.scenario_price) + ', against the reviewed ' + money(saved.reviewed.calculation.scenario_price) + '.');
+    focusLater('comparison-title');
+  }, formError('what-if-error'));
+}
+function discardWhatIf() {
+  mutate('/sensitivity/discard', { expected_version: view.version }, () => { draft().whatIf = null; render(); announce('Saved what-if discarded. The reviewed scenario is unchanged.'); focusLater('comparison-title'); });
+}
+
+/* History, in buyer-facing sentences. Hashes live in the engineering view. */
+const origin = { source: 'source', reviewer: 'reviewer', not_stated: 'not stated in source' };
+const inputsText = inputs => cap(DRIVERS.map(name => name + ' ' + pct(inputs[name], 1)).join(', '));
+function eventLines(event) {
+  const label = event.field ? factOf(event.field)?.label || event.field : '';
+  const before = (event.value_before ?? 'no value') + ' (' + origin[event.value_before_origin] + ')';
+  const after = (event.value_after ?? 'no value') + ' (' + origin[event.value_after_origin] + ')';
+  const basis = event.basis === 'cited_passage' && event.citation ? 'Basis: cited passage, ' + where(event.citation) + ' — “' + event.citation.quote + '”' : event.basis === 'reviewer_assumption' ? 'Basis: reviewer assumption, no supporting passage.' : null;
+  const change = event.status_before && event.status_before !== event.status_after ? 'Result: ' + STATUS[event.status_before] + ' → ' + STATUS[event.status_after] + '.' : null;
+  const dropped = event.what_if_discarded && event.action !== 'what_if_discarded' ? 'The saved what-if was discarded because its reviewed basis changed.' : null;
+  switch (event.action) {
+    case 'review_opened': return ['Review opened', ['Source facts loaded. Status: ' + STATUS[event.status_after] + '.']];
+    case 'review_restarted': return ['Case restarted', [(event.discarded_events ? 'The earlier history of ' + event.discarded_events + ' entries was discarded, not archived.' : 'The earlier saved review was unreadable and was replaced.'), 'Status: ' + STATUS[event.status_after] + '.']];
+    case 'correction_applied': return ['Override recorded · ' + label + ': ' + before + ' → ' + after, [basis, 'Reason: ' + event.reason, change, dropped]];
+    case 'correction_amended': return [event.value_before === event.value_after ? 'Override justification amended · ' + label + ' stays ' + event.value_after : 'Override amended · ' + label + ': ' + before + ' → ' + after, [basis, 'Reason: ' + event.reason, change, dropped]];
+    case 'correction_reverted': return ['Override reverted · ' + label + ': ' + before + ' → ' + after, ['Reason: ' + event.reason, change, dropped]];
+    case 'what_if_calculated': return ['What-if calculated', [inputsText(event.inputs_after), event.inputs_before ? 'Replaces the earlier what-if: ' + inputsText(event.inputs_before) + '.' : null, 'The reviewed result is unchanged.']];
+    case 'what_if_discarded': return ['What-if discarded', [event.inputs_before ? 'Discarded inputs: ' + inputsText(event.inputs_before) + '.' : null, 'The reviewed result is unchanged.']];
+    default: return [event.action, []];
+  }
+}
+function renderHistory() {
+  const use = view.history;
+  $('history-use').textContent = use.used + ' of ' + use.limit + ' entries used' + (use.remaining <= 5 ? ' · ' + use.remaining + ' left before a restart is needed' : '');
+  $('events').replaceChildren(...[...view.events].reverse().map(event => {
+    const [title, lines] = eventLines(event);
+    return el('li', { class: 'event' }, el('span', { class: 'ver', text: 'v' + event.review_version }), el('div', {},
+      el('h4', {}, title, event.branch === 'hypothetical' ? el('span', { class: 'chip hyp', text: 'Hypothetical' }) : null),
+      lines.filter(Boolean).map(text => el('p', { text })), el('time', { datetime: event.at, text: when(event.at) })));
+  }));
+  const d = draft();
+  $('restart').replaceChildren(d.restart
+    ? el('div', { class: 'block override', style: 'margin-top:12px' },
+        el('p', {}, el('strong', { text: 'Restart this case?' })),
+        el('p', { text: 'The override, the saved what-if and these ' + use.used + ' history entries are discarded, not archived. The new history starts with an entry saying so.' }),
+        el('div', { class: 'actions' }, el('button', { type: 'button', class: 'btn danger', id: 'restart-confirm', text: 'Restart the case', on: { click: () => restartCase(false) } }), el('button', { type: 'button', class: 'btn', text: 'Cancel', on: { click: () => { d.restart = false; renderHistory(); focusLater('restart-open'); } } })))
+    : el('div', { class: 'actions' }, el('button', { type: 'button', class: 'btn small', id: 'restart-open', text: 'Restart this case…', on: { click: () => { d.restart = true; renderHistory(); focusLater('restart-confirm'); } } })));
+}
+async function restartCase(unreadable) {
+  if (busy) return;
+  clearAlert();
+  setBusy(true);
+  let saved = null, error = null;
+  try { saved = await api('/demo/' + selected + '/restart', 'POST', unreadable || !view ? {} : { expected_version: view.version }); } catch (caught) { error = caught; }
+  setBusy(false);
+  if (error) { await fail(error); return; }
+  view = saved;
+  delete drafts[selected];
+  shown = initialSource();
+  render();
+  announce('Case restarted. Status: ' + STATUS[view.status] + '.');
+  focusLater('headline');
+}
+
+/* Engineering view: everything a buyer does not need to read. */
+function renderEngineering() {
+  const s = view.storage, short = hash => hash ? hash.slice(0, 12) + '…' : '—';
+  const yes = value => value === null ? 'not applicable' : value ? 'yes' : 'NO — mismatch';
+  const backend = { firestore: 'Firestore — survives service restarts and new revisions', local_test_store: 'Local JSON file on this machine — a verification aid, not a deployment', memory: 'Process memory — lost when the process stops' }[s.backend];
+  const card = (title, wide, ...children) => el('section', { class: 'card' + (wide ? ' wide' : '') }, el('div', { class: 'card-head' }, el('h2', { text: title })), el('div', { class: 'card-body' }, children));
+  const kv = pairs => el('dl', { class: 'kv' }, pairs.flatMap(([key, value]) => [el('dt', { text: key }), el('dd', {}, value)]));
+  $('engineering').replaceChildren(
+    card('Stack', false, kv([
+      ['Service', 'FastAPI on Python 3.12, served by Uvicorn. One application factory; every route is async.'],
+      ['Contracts', 'Pydantic models for every request, response and error. Unknown fields are rejected.'],
+      ['Calculation', 'A pure Python function using decimal arithmetic. It makes no HTTP, storage or model call.'],
+      ['Storage', s.backend === 'firestore' ? 'Firestore, behind a storage interface with an in-memory equivalent for tests.' : backend],
+    ])),
+    card('API contract', false,
+      el('p', {}, 'Every route declares a typed response and error schema, generated by FastAPI from the Pydantic models: ', el('a', { href: '/openapi.json', text: 'openapi.json' }), ' · ', el('a', { href: '/docs', id: 'api-docs', target: '_blank', rel: 'noopener', text: 'Interactive API docs' }), '.'),
+      lastExchange ? [
+        el('p', { style: 'margin-top:10px' }, 'Last exchange: ', el('code', { text: lastExchange.method + ' ' + lastExchange.path + ' → ' + lastExchange.status })),
+        el('details', {}, el('summary', { text: 'Request body' }), el('pre', { text: lastExchange.request === undefined ? '(none)' : JSON.stringify(lastExchange.request, null, 2) })),
+        el('details', {}, el('summary', { text: 'Response body' }), el('pre', { text: JSON.stringify(lastExchange.response, null, 2) }))] : null),
+    card('Storage and identity', false, kv([
+      ['Backend', backend],
+      ['Retention', 'This record expires ' + when(s.expires_at) + ' (' + s.retention_days + ' days after its last change).'],
+      ['Identity', 'One opaque owner token in an HTTP-only, same-site cookie for all three cases. The server stores only its SHA-256 hash.'],
+      ['Stored', 'The case name, the override with its reason and citation, the what-if inputs and the history. Results are recomputed on every read.'],
+    ])),
+    card('Concurrency', false, kv([
+      ['Review version', String(view.version) + ' (generation ' + view.generation + ')'],
+      ['Rule', 'Every change sends the version it was based on. The comparison is repeated inside the storage transaction; a mismatch returns 409 and writes nothing.'],
+      ['History limit', view.history.used + ' of ' + view.history.limit + ' entries. At the limit every change returns 409 until the case is restarted.'],
+    ])),
+    card('Fingerprints and integrity', true, kv([
+      ['Source document SHA-256', [el('span', { class: 'hash', text: view.source.sha256 }), el('p', { class: 'muted', text: 'The hash of the downloadable PDF itself; compare with shasum -a 256.' })]],
+      ['Reviewed result', el('span', { class: 'hash', text: view.reviewed.analysis_fingerprint })],
+      ['What-if result', el('span', { class: 'hash', text: view.what_if ? view.what_if.result.analysis_fingerprint : '—' })],
+      ['Latest history entry matches the recomputed reviewed result', yes(view.integrity.latest_reviewed_event_matches_result)],
+      ['Latest what-if entry matches the recomputed what-if', yes(view.integrity.latest_what_if_event_matches_result)],
+      ['Cited passage still matches the source document', yes(view.integrity.citation_matches_current_document)],
+    ])),
+    card('History with fingerprints', true, el('div', { class: 'table-scroll' }, el('table', {},
+      el('thead', {}, el('tr', {}, ['Version', 'Action', 'Branch', 'Reviewed result before', 'Reviewed result after', 'What-if result'].map(text => el('th', { scope: 'col', text })))),
+      el('tbody', {}, view.events.map(event => el('tr', {},
+        el('td', { text: String(event.review_version) }), el('td', { text: event.action }), el('td', { text: event.branch }),
+        el('td', { class: 'hash', title: event.reviewed_fingerprint_before || '', text: short(event.reviewed_fingerprint_before) }),
+        el('td', { class: 'hash', title: event.reviewed_fingerprint_after, text: short(event.reviewed_fingerprint_after) }),
+        el('td', { class: 'hash', title: event.what_if_fingerprint || '', text: short(event.what_if_fingerprint) }))))))),
+    card('What this demonstration does not show', false, el('ul', { class: 'plain' },
+      ['No AI extraction: facts come from a parser for one labelled fixture format. No model is called.',
+       'No measured accuracy. There is no evaluation set yet, so no extraction or review-routing figures are reported.',
+       'A citation is checked only for existence and a text match of the value, not for whether it supports the override.',
+       'The request limit is held in memory per service instance; it is not a global quota.',
+       'Three fictional cases. Nothing here reflects a real supplier, index or price.'].map(text => el('li', { text })))));
+}
+
+/* ---------- wiring ---------- */
+function setMode(next) {
+  mode = next;
+  $('view-review').setAttribute('aria-pressed', String(mode === 'review'));
+  $('view-engineering').setAttribute('aria-pressed', String(mode === 'engineering'));
+  if (view) { $('review-view').hidden = mode !== 'review'; $('engineering-view').hidden = mode !== 'engineering'; if (mode === 'engineering') renderEngineering(); }
+}
+$('view-review').addEventListener('click', () => setMode('review'));
+$('view-engineering').addEventListener('click', () => setMode('engineering'));
+$('pane-source').addEventListener('click', () => setPane('source'));
+$('pane-decision').addEventListener('click', () => setPane('decision'));
+$('alert-dismiss').addEventListener('click', clearAlert);
+loadCases().then(() => openCase(selected, false));
+</script>
+</body>
+</html>

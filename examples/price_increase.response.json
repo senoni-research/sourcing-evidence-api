@@ -1,0 +1,242 @@
+{
+  "review_id": "review_8c8c9bfab97c2128",
+  "request_id": "fe4fecff97fa434389ed8b6b60e380fb",
+  "analysis_fingerprint": "8c8c9bfab97c212831438b6d9f2080423324e545808b83ebe49ade77f979655f",
+  "model_version": "declared-index-basket/1.0",
+  "status": "scenario_available",
+  "summary": "The declared cost-driver basket is complete. Review the conditional scenario and discuss the remaining difference with the supplier.",
+  "issues": [],
+  "calculation": {
+    "currency": "GBP",
+    "unit": "piece",
+    "baseline_price": "100.00",
+    "proposed_price": "112.00",
+    "proposed_change_pct": "12.0000",
+    "model_change_pct": "2.3000",
+    "scenario_price": "102.30",
+    "gap_per_unit": "9.70",
+    "annualised_gap": "97000.00",
+    "contributions": [
+      {
+        "name": "materials",
+        "share": "0.50",
+        "index_change_pct": "6.0000",
+        "contribution_pp": "3.0000"
+      },
+      {
+        "name": "energy",
+        "share": "0.20",
+        "index_change_pct": "-10.0000",
+        "contribution_pp": "-2.0000"
+      },
+      {
+        "name": "labour",
+        "share": "0.20",
+        "index_change_pct": "4.0000",
+        "contribution_pp": "0.8000"
+      },
+      {
+        "name": "freight",
+        "share": "0.10",
+        "index_change_pct": "5.0000",
+        "contribution_pp": "0.5000"
+      }
+    ]
+  },
+  "questions": [
+    "Can the supplier reconcile the proposed price with the declared cost shares and index periods?",
+    "Do margin, hedging, productivity, volume, FX or contractual terms explain the remaining difference?",
+    "Are these indices representative of the supplier's actual purchasing and production costs?"
+  ],
+  "assumptions": [
+    "Baseline price moves proportionally with the declared index basket.",
+    "Cost shares are assumed; margin, FX, hedging and productivity are held constant.",
+    "Annual volume is an illustration, not committed demand or realised savings."
+  ],
+  "evidence": [
+    {
+      "document": "price_increase.pdf",
+      "page": 1,
+      "quote": "baseline.supplier = Fictional Northbridge Components",
+      "sha256": "55891f4622c7fa85afa8c49947bc0db0ffd55169781d7800e4e44fde5cc9ad08"
+    },
+    {
+      "document": "price_increase.pdf",
+      "page": 1,
+      "quote": "baseline.sku = PANEL-100",
+      "sha256": "55891f4622c7fa85afa8c49947bc0db0ffd55169781d7800e4e44fde5cc9ad08"
+    },
+    {
+      "document": "price_increase.pdf",
+      "page": 1,
+      "quote": "baseline.revision = A",
+      "sha256": "55891f4622c7fa85afa8c49947bc0db0ffd55169781d7800e4e44fde5cc9ad08"
+    },
+    {
+      "document": "price_increase.pdf",
+      "page": 1,
+      "quote": "baseline.currency = GBP",
+      "sha256": "55891f4622c7fa85afa8c49947bc0db0ffd55169781d7800e4e44fde5cc9ad08"
+    },
+    {
+      "document": "price_increase.pdf",
+      "page": 1,
+      "quote": "baseline.unit = piece",
+      "sha256": "55891f4622c7fa85afa8c49947bc0db0ffd55169781d7800e4e44fde5cc9ad08"
+    },
+    {
+      "document": "price_increase.pdf",
+      "page": 1,
+      "quote": "baseline.quantity = 1000",
+      "sha256": "55891f4622c7fa85afa8c49947bc0db0ffd55169781d7800e4e44fde5cc9ad08"
+    },
+    {
+      "document": "price_increase.pdf",
+      "page": 1,
+      "quote": "baseline.unit_price = 100.00",
+      "sha256": "55891f4622c7fa85afa8c49947bc0db0ffd55169781d7800e4e44fde5cc9ad08"
+    },
+    {
+      "document": "price_increase.pdf",
+      "page": 1,
+      "quote": "baseline.quote_date = 2026-01-01",
+      "sha256": "55891f4622c7fa85afa8c49947bc0db0ffd55169781d7800e4e44fde5cc9ad08"
+    },
+    {
+      "document": "price_increase.pdf",
+      "page": 1,
+      "quote": "baseline.valid_until = 2026-02-01",
+      "sha256": "55891f4622c7fa85afa8c49947bc0db0ffd55169781d7800e4e44fde5cc9ad08"
+    },
+    {
+      "document": "price_increase.pdf",
+      "page": 1,
+      "quote": "baseline.freight = included",
+      "sha256": "55891f4622c7fa85afa8c49947bc0db0ffd55169781d7800e4e44fde5cc9ad08"
+    },
+    {
+      "document": "price_increase.pdf",
+      "page": 2,
+      "quote": "proposal.supplier = Fictional Northbridge Components",
+      "sha256": "55891f4622c7fa85afa8c49947bc0db0ffd55169781d7800e4e44fde5cc9ad08"
+    },
+    {
+      "document": "price_increase.pdf",
+      "page": 2,
+      "quote": "proposal.sku = PANEL-100",
+      "sha256": "55891f4622c7fa85afa8c49947bc0db0ffd55169781d7800e4e44fde5cc9ad08"
+    },
+    {
+      "document": "price_increase.pdf",
+      "page": 2,
+      "quote": "proposal.revision = A",
+      "sha256": "55891f4622c7fa85afa8c49947bc0db0ffd55169781d7800e4e44fde5cc9ad08"
+    },
+    {
+      "document": "price_increase.pdf",
+      "page": 2,
+      "quote": "proposal.currency = GBP",
+      "sha256": "55891f4622c7fa85afa8c49947bc0db0ffd55169781d7800e4e44fde5cc9ad08"
+    },
+    {
+      "document": "price_increase.pdf",
+      "page": 2,
+      "quote": "proposal.unit = piece",
+      "sha256": "55891f4622c7fa85afa8c49947bc0db0ffd55169781d7800e4e44fde5cc9ad08"
+    },
+    {
+      "document": "price_increase.pdf",
+      "page": 2,
+      "quote": "proposal.quantity = 1000",
+      "sha256": "55891f4622c7fa85afa8c49947bc0db0ffd55169781d7800e4e44fde5cc9ad08"
+    },
+    {
+      "document": "price_increase.pdf",
+      "page": 2,
+      "quote": "proposal.unit_price = 112.00",
+      "sha256": "55891f4622c7fa85afa8c49947bc0db0ffd55169781d7800e4e44fde5cc9ad08"
+    },
+    {
+      "document": "price_increase.pdf",
+      "page": 2,
+      "quote": "proposal.quote_date = 2026-11-01",
+      "sha256": "55891f4622c7fa85afa8c49947bc0db0ffd55169781d7800e4e44fde5cc9ad08"
+    },
+    {
+      "document": "price_increase.pdf",
+      "page": 2,
+      "quote": "proposal.valid_until = 2026-12-31",
+      "sha256": "55891f4622c7fa85afa8c49947bc0db0ffd55169781d7800e4e44fde5cc9ad08"
+    },
+    {
+      "document": "price_increase.pdf",
+      "page": 2,
+      "quote": "proposal.freight = included",
+      "sha256": "55891f4622c7fa85afa8c49947bc0db0ffd55169781d7800e4e44fde5cc9ad08"
+    },
+    {
+      "document": "price_increase.pdf",
+      "page": 3,
+      "quote": "as_of = 2026-11-09",
+      "sha256": "55891f4622c7fa85afa8c49947bc0db0ffd55169781d7800e4e44fde5cc9ad08"
+    },
+    {
+      "document": "price_increase.pdf",
+      "page": 3,
+      "quote": "annual_volume = 10000",
+      "sha256": "55891f4622c7fa85afa8c49947bc0db0ffd55169781d7800e4e44fde5cc9ad08"
+    },
+    {
+      "document": "price_increase.pdf",
+      "page": 3,
+      "quote": "assumption = Baseline price moves proportionally with the declared index basket.",
+      "sha256": "55891f4622c7fa85afa8c49947bc0db0ffd55169781d7800e4e44fde5cc9ad08"
+    },
+    {
+      "document": "price_increase.pdf",
+      "page": 3,
+      "quote": "assumption = Cost shares are assumed; margin, FX, hedging and productivity are held constant.",
+      "sha256": "55891f4622c7fa85afa8c49947bc0db0ffd55169781d7800e4e44fde5cc9ad08"
+    },
+    {
+      "document": "price_increase.pdf",
+      "page": 3,
+      "quote": "assumption = Annual volume is an illustration, not committed demand or realised savings.",
+      "sha256": "55891f4622c7fa85afa8c49947bc0db0ffd55169781d7800e4e44fde5cc9ad08"
+    },
+    {
+      "document": "price_increase.pdf",
+      "page": 3,
+      "quote": "driver.materials = share:0.50; baseline_index:100; current_index:106; baseline_period:2026-01-01; current_period:2026-10-01",
+      "sha256": "55891f4622c7fa85afa8c49947bc0db0ffd55169781d7800e4e44fde5cc9ad08"
+    },
+    {
+      "document": "price_increase.pdf",
+      "page": 3,
+      "quote": "driver.energy = share:0.20; baseline_index:100; current_index:90; baseline_period:2026-01-01; current_period:2026-10-01",
+      "sha256": "55891f4622c7fa85afa8c49947bc0db0ffd55169781d7800e4e44fde5cc9ad08"
+    },
+    {
+      "document": "price_increase.pdf",
+      "page": 3,
+      "quote": "driver.labour = share:0.20; baseline_index:100; current_index:104; baseline_period:2026-01-01; current_period:2026-10-01",
+      "sha256": "55891f4622c7fa85afa8c49947bc0db0ffd55169781d7800e4e44fde5cc9ad08"
+    },
+    {
+      "document": "price_increase.pdf",
+      "page": 3,
+      "quote": "driver.freight = share:0.10; baseline_index:100; current_index:105; baseline_period:2026-01-01; current_period:2026-10-01",
+      "sha256": "55891f4622c7fa85afa8c49947bc0db0ffd55169781d7800e4e44fde5cc9ad08"
+    }
+  ],
+  "extraction_mode": "template",
+  "evidence_validation": "quotations_matched_to_source_text",
+  "limitations": [
+    "This is a conditional index-basket scenario, not a verified supplier should-cost estimate.",
+    "The gap is a discussion point, not evidence of overcharging or a saving achieved.",
+    "Shares, indices and annual volume are supplied inputs; their commercial validity requires human review.",
+    "The model assumes the baseline price moves proportionally with the declared basket; margin, hedging, productivity, contracts and FX may change the result.",
+    "Evidence excerpts establish traceability, not independent verification or semantic correctness."
+  ],
+  "processing_ms": 9.359
+}

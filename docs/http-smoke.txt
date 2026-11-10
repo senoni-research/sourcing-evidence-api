@@ -1,0 +1,3 @@
+price_increase: HTTP 200 / scenario_available / 29 evidence excerpts
+missing_evidence: HTTP 200 / needs_information / 29 evidence excerpts
+scope_mismatch: HTTP 200 / not_comparable / 29 evidence excerpts

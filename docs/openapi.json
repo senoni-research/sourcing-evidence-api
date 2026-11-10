@@ -1,0 +1,2564 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Sourcing Evidence API",
+    "description": "Independent synthetic-data prototype. A conditional cost-driver scenario; never supplier approval or a verified should-cost estimate.",
+    "version": "0.1.0"
+  },
+  "paths": {
+    "/demo/reviews": {
+      "get": {
+        "tags": [
+          "fictional evidence review"
+        ],
+        "summary": "List the fictional cases and this browser's saved review of each",
+        "operationId": "list_demo_demo_reviews_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CaseList"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "`demo_rate_limit`: per-instance request limit reached.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "`review_store_unavailable`: storage did not respond.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/demo/{case}/sessions": {
+      "post": {
+        "tags": [
+          "fictional evidence review"
+        ],
+        "summary": "Open a case: resume its review or create one",
+        "operationId": "open_demo_demo__case__sessions_post",
+        "parameters": [
+          {
+            "name": "case",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Case"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReviewView"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "`review_not_found`: this browser has no review of the case.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "`stale_review`: the review changed since `expected_version`; nothing was written. `history_full`: the history limit is reached; restart the case.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "`invalid_request`: the body does not match the schema. Other codes (`matches_source`, `citation_does_not_state_value`, `review_blocked`, ...) reject a change that is not allowed in the current review state.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "`demo_rate_limit`: per-instance request limit reached.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "`stored_review_invalid`: the saved review failed validation and is not served.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "`review_store_unavailable`: storage did not respond.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/demo/{case}/session": {
+      "get": {
+        "tags": [
+          "fictional evidence review"
+        ],
+        "summary": "Read the saved review without changing it",
+        "operationId": "resume_demo_demo__case__session_get",
+        "parameters": [
+          {
+            "name": "case",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Case"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReviewView"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "`review_not_found`: this browser has no review of the case.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "`stale_review`: the review changed since `expected_version`; nothing was written. `history_full`: the history limit is reached; restart the case.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "`invalid_request`: the body does not match the schema. Other codes (`matches_source`, `citation_does_not_state_value`, `review_blocked`, ...) reject a change that is not allowed in the current review state.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "`demo_rate_limit`: per-instance request limit reached.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "`stored_review_invalid`: the saved review failed validation and is not served.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "`review_store_unavailable`: storage did not respond.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/demo/{case}/correction": {
+      "post": {
+        "tags": [
+          "fictional evidence review"
+        ],
+        "summary": "Record or amend a justified reviewer override",
+        "operationId": "correct_demo_demo__case__correction_post",
+        "parameters": [
+          {
+            "name": "case",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Case"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CorrectionInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReviewView"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "`review_not_found`: this browser has no review of the case.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "`stale_review`: the review changed since `expected_version`; nothing was written. `history_full`: the history limit is reached; restart the case.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "`invalid_request`: the body does not match the schema. Other codes (`matches_source`, `citation_does_not_state_value`, `review_blocked`, ...) reject a change that is not allowed in the current review state.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "`demo_rate_limit`: per-instance request limit reached.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "`stored_review_invalid`: the saved review failed validation and is not served.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "`review_store_unavailable`: storage did not respond.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/demo/{case}/correction/revert": {
+      "post": {
+        "tags": [
+          "fictional evidence review"
+        ],
+        "summary": "Revert the override to the source value",
+        "operationId": "revert_demo_demo__case__correction_revert_post",
+        "parameters": [
+          {
+            "name": "case",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Case"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RevertInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReviewView"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "`review_not_found`: this browser has no review of the case.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "`stale_review`: the review changed since `expected_version`; nothing was written. `history_full`: the history limit is reached; restart the case.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "`invalid_request`: the body does not match the schema. Other codes (`matches_source`, `citation_does_not_state_value`, `review_blocked`, ...) reject a change that is not allowed in the current review state.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "`demo_rate_limit`: per-instance request limit reached.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "`stored_review_invalid`: the saved review failed validation and is not served.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "`review_store_unavailable`: storage did not respond.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/demo/{case}/sensitivity": {
+      "post": {
+        "tags": [
+          "fictional evidence review"
+        ],
+        "summary": "Calculate a hypothetical what-if",
+        "operationId": "sensitivity_demo_demo__case__sensitivity_post",
+        "parameters": [
+          {
+            "name": "case",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Case"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SensitivityInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReviewView"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "`review_not_found`: this browser has no review of the case.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "`stale_review`: the review changed since `expected_version`; nothing was written. `history_full`: the history limit is reached; restart the case.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "`invalid_request`: the body does not match the schema. Other codes (`matches_source`, `citation_does_not_state_value`, `review_blocked`, ...) reject a change that is not allowed in the current review state.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "`demo_rate_limit`: per-instance request limit reached.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "`stored_review_invalid`: the saved review failed validation and is not served.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "`review_store_unavailable`: storage did not respond.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/demo/{case}/sensitivity/discard": {
+      "post": {
+        "tags": [
+          "fictional evidence review"
+        ],
+        "summary": "Discard the saved what-if",
+        "operationId": "discard_sensitivity_demo_demo__case__sensitivity_discard_post",
+        "parameters": [
+          {
+            "name": "case",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Case"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VersionInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReviewView"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "`review_not_found`: this browser has no review of the case.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "`stale_review`: the review changed since `expected_version`; nothing was written. `history_full`: the history limit is reached; restart the case.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "`invalid_request`: the body does not match the schema. Other codes (`matches_source`, `citation_does_not_state_value`, `review_blocked`, ...) reject a change that is not allowed in the current review state.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "`demo_rate_limit`: per-instance request limit reached.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "`stored_review_invalid`: the saved review failed validation and is not served.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "`review_store_unavailable`: storage did not respond.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/demo/{case}/restart": {
+      "post": {
+        "tags": [
+          "fictional evidence review"
+        ],
+        "summary": "Restart the case; earlier history is discarded",
+        "operationId": "restart_demo_demo__case__restart_post",
+        "parameters": [
+          {
+            "name": "case",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Case"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RestartInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReviewView"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "`review_not_found`: this browser has no review of the case.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "`stale_review`: the review changed since `expected_version`; nothing was written. `history_full`: the history limit is reached; restart the case.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "`invalid_request`: the body does not match the schema. Other codes (`matches_source`, `citation_does_not_state_value`, `review_blocked`, ...) reject a change that is not allowed in the current review state.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "`demo_rate_limit`: per-instance request limit reached.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "`stored_review_invalid`: the saved review failed validation and is not served.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "`review_store_unavailable`: storage did not respond.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/demo/{case}/document": {
+      "get": {
+        "tags": [
+          "fictional evidence review"
+        ],
+        "summary": "Download the fictional source pack the review cites",
+        "operationId": "demo_document_demo__case__document_get",
+        "parameters": [
+          {
+            "name": "case",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Case"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/pdf": {}
+            }
+          },
+          "404": {
+            "description": "`review_not_found`: this browser has no review of the case.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AuditEvent": {
+        "properties": {
+          "sequence": {
+            "type": "integer",
+            "maximum": 40.0,
+            "minimum": 1.0,
+            "title": "Sequence"
+          },
+          "review_version": {
+            "type": "integer",
+            "title": "Review Version"
+          },
+          "at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "At"
+          },
+          "action": {
+            "type": "string",
+            "enum": [
+              "review_opened",
+              "review_restarted",
+              "correction_applied",
+              "correction_amended",
+              "correction_reverted",
+              "what_if_calculated",
+              "what_if_discarded"
+            ],
+            "title": "Action"
+          },
+          "branch": {
+            "type": "string",
+            "enum": [
+              "reviewed",
+              "hypothetical"
+            ],
+            "title": "Branch"
+          },
+          "field": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "proposal.revision",
+                  "drivers.energy.current_index"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Field"
+          },
+          "value_before": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Value Before"
+          },
+          "value_before_origin": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "source",
+                  "reviewer",
+                  "not_stated"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Value Before Origin"
+          },
+          "value_after": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Value After"
+          },
+          "value_after_origin": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "source",
+                  "reviewer",
+                  "not_stated"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Value After Origin"
+          },
+          "basis": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "cited_passage",
+                  "reviewer_assumption"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Basis"
+          },
+          "citation": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/SourceRef"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "reason": {
+            "type": "string",
+            "title": "Reason",
+            "default": ""
+          },
+          "inputs_before": {
+            "anyOf": [
+              {
+                "additionalProperties": {
+                  "type": "string"
+                },
+                "propertyNames": {
+                  "enum": [
+                    "materials",
+                    "energy",
+                    "labour",
+                    "freight"
+                  ]
+                },
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Inputs Before"
+          },
+          "inputs_after": {
+            "anyOf": [
+              {
+                "additionalProperties": {
+                  "type": "string"
+                },
+                "propertyNames": {
+                  "enum": [
+                    "materials",
+                    "energy",
+                    "labour",
+                    "freight"
+                  ]
+                },
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Inputs After"
+          },
+          "what_if_discarded": {
+            "type": "boolean",
+            "title": "What If Discarded",
+            "default": false
+          },
+          "discarded_events": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Discarded Events"
+          },
+          "status_before": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "scenario_available",
+                  "needs_information",
+                  "not_comparable"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Status Before"
+          },
+          "status_after": {
+            "type": "string",
+            "enum": [
+              "scenario_available",
+              "needs_information",
+              "not_comparable"
+            ],
+            "title": "Status After"
+          },
+          "reviewed_fingerprint_before": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reviewed Fingerprint Before"
+          },
+          "reviewed_fingerprint_after": {
+            "type": "string",
+            "title": "Reviewed Fingerprint After"
+          },
+          "what_if_fingerprint": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "What If Fingerprint"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "sequence",
+          "review_version",
+          "at",
+          "action",
+          "branch",
+          "status_after",
+          "reviewed_fingerprint_after"
+        ],
+        "title": "AuditEvent"
+      },
+      "BlockingIssue": {
+        "properties": {
+          "code": {
+            "type": "string",
+            "title": "Code"
+          },
+          "message": {
+            "type": "string",
+            "title": "Message"
+          },
+          "fields": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Fields",
+            "description": "Facts this issue refers to; each has its own source reference."
+          },
+          "correctable_field": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "proposal.revision",
+                  "drivers.energy.current_index"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Correctable Field"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "code",
+          "message",
+          "fields",
+          "correctable_field"
+        ],
+        "title": "BlockingIssue"
+      },
+      "Calculation": {
+        "properties": {
+          "currency": {
+            "type": "string",
+            "title": "Currency"
+          },
+          "unit": {
+            "type": "string",
+            "title": "Unit"
+          },
+          "baseline_price": {
+            "type": "string",
+            "title": "Baseline Price"
+          },
+          "proposed_price": {
+            "type": "string",
+            "title": "Proposed Price"
+          },
+          "proposed_change_pct": {
+            "type": "string",
+            "title": "Proposed Change Pct"
+          },
+          "model_change_pct": {
+            "type": "string",
+            "title": "Model Change Pct"
+          },
+          "scenario_price": {
+            "type": "string",
+            "title": "Scenario Price"
+          },
+          "gap_per_unit": {
+            "type": "string",
+            "title": "Gap Per Unit"
+          },
+          "annualised_gap": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Annualised Gap"
+          },
+          "contributions": {
+            "items": {
+              "$ref": "#/components/schemas/Contribution"
+            },
+            "type": "array",
+            "title": "Contributions"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "currency",
+          "unit",
+          "baseline_price",
+          "proposed_price",
+          "proposed_change_pct",
+          "model_change_pct",
+          "scenario_price",
+          "gap_per_unit",
+          "annualised_gap",
+          "contributions"
+        ],
+        "title": "Calculation"
+      },
+      "CaseHeader": {
+        "properties": {
+          "supplier": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Supplier"
+          },
+          "item": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Item"
+          },
+          "baseline_revision": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Baseline Revision"
+          },
+          "proposal_revision_source": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Proposal Revision Source"
+          },
+          "proposal_revision_effective": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Proposal Revision Effective"
+          },
+          "currency": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Currency"
+          },
+          "unit": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Unit"
+          },
+          "baseline_price": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Baseline Price"
+          },
+          "proposed_price": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Proposed Price"
+          },
+          "proposed_change_pct": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Proposed Change Pct"
+          },
+          "as_of": {
+            "type": "string",
+            "format": "date",
+            "title": "As Of"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "supplier",
+          "item",
+          "baseline_revision",
+          "proposal_revision_source",
+          "proposal_revision_effective",
+          "currency",
+          "unit",
+          "baseline_price",
+          "proposed_price",
+          "proposed_change_pct",
+          "as_of"
+        ],
+        "title": "CaseHeader",
+        "description": "Observed quotation facts. Available even while the derived calculation is withheld."
+      },
+      "CaseList": {
+        "properties": {
+          "cases": {
+            "items": {
+              "$ref": "#/components/schemas/CaseSummary"
+            },
+            "type": "array",
+            "title": "Cases"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "cases"
+        ],
+        "title": "CaseList"
+      },
+      "CaseReviewSummary": {
+        "properties": {
+          "version": {
+            "type": "integer",
+            "title": "Version"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "scenario_available",
+              "needs_information",
+              "not_comparable"
+            ],
+            "title": "Status"
+          },
+          "has_override": {
+            "type": "boolean",
+            "title": "Has Override"
+          },
+          "has_what_if": {
+            "type": "boolean",
+            "title": "Has What If"
+          },
+          "events": {
+            "type": "integer",
+            "title": "Events"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "version",
+          "status",
+          "has_override",
+          "has_what_if",
+          "events"
+        ],
+        "title": "CaseReviewSummary"
+      },
+      "CaseSummary": {
+        "properties": {
+          "case": {
+            "type": "string",
+            "enum": [
+              "price_increase",
+              "missing_evidence",
+              "scope_mismatch"
+            ],
+            "title": "Case"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "description": {
+            "type": "string",
+            "title": "Description"
+          },
+          "review": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/CaseReviewSummary"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "case",
+          "title",
+          "description",
+          "review"
+        ],
+        "title": "CaseSummary"
+      },
+      "Citation": {
+        "properties": {
+          "page": {
+            "type": "integer",
+            "maximum": 10.0,
+            "minimum": 1.0,
+            "title": "Page"
+          },
+          "line": {
+            "type": "integer",
+            "maximum": 200.0,
+            "minimum": 1.0,
+            "title": "Line"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "page",
+          "line"
+        ],
+        "title": "Citation"
+      },
+      "Contribution": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "share": {
+            "type": "string",
+            "title": "Share"
+          },
+          "index_change_pct": {
+            "type": "string",
+            "title": "Index Change Pct"
+          },
+          "contribution_pp": {
+            "type": "string",
+            "title": "Contribution Pp"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "name",
+          "share",
+          "index_change_pct",
+          "contribution_pp"
+        ],
+        "title": "Contribution"
+      },
+      "CorrectionInput": {
+        "properties": {
+          "expected_version": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Expected Version"
+          },
+          "field": {
+            "type": "string",
+            "enum": [
+              "proposal.revision",
+              "drivers.energy.current_index"
+            ],
+            "title": "Field"
+          },
+          "value": {
+            "type": "string",
+            "maxLength": 12,
+            "minLength": 1,
+            "title": "Value"
+          },
+          "basis": {
+            "type": "string",
+            "enum": [
+              "cited_passage",
+              "reviewer_assumption"
+            ],
+            "title": "Basis"
+          },
+          "citation": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Citation"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "reason": {
+            "type": "string",
+            "maxLength": 500,
+            "minLength": 10,
+            "title": "Reason"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "expected_version",
+          "field",
+          "value",
+          "basis",
+          "reason"
+        ],
+        "title": "CorrectionInput",
+        "description": "A deliberate reviewer override. Nothing is prefilled or inferred by the service."
+      },
+      "CorrectionView": {
+        "properties": {
+          "field": {
+            "type": "string",
+            "enum": [
+              "proposal.revision",
+              "drivers.energy.current_index"
+            ],
+            "title": "Field"
+          },
+          "value": {
+            "type": "string",
+            "title": "Value"
+          },
+          "basis": {
+            "type": "string",
+            "enum": [
+              "cited_passage",
+              "reviewer_assumption"
+            ],
+            "title": "Basis"
+          },
+          "citation": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/SourceRef"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "reason": {
+            "type": "string",
+            "title": "Reason"
+          },
+          "recorded_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Recorded At"
+          },
+          "recorded_in_version": {
+            "type": "integer",
+            "title": "Recorded In Version"
+          },
+          "label": {
+            "type": "string",
+            "title": "Label"
+          },
+          "source_value": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source Value"
+          },
+          "citation_mentions_value": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Citation Mentions Value",
+            "description": "Text match only. It is not a judgement that the passage supports the override."
+          },
+          "resolves_review": {
+            "type": "boolean",
+            "title": "Resolves Review"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "field",
+          "value",
+          "basis",
+          "reason",
+          "recorded_at",
+          "recorded_in_version",
+          "label",
+          "source_value",
+          "citation_mentions_value",
+          "resolves_review"
+        ],
+        "title": "CorrectionView"
+      },
+      "ErrorDetail": {
+        "properties": {
+          "code": {
+            "type": "string",
+            "title": "Code"
+          },
+          "message": {
+            "type": "string",
+            "title": "Message"
+          }
+        },
+        "type": "object",
+        "required": [
+          "code",
+          "message"
+        ],
+        "title": "ErrorDetail"
+      },
+      "ErrorResponse": {
+        "properties": {
+          "error": {
+            "$ref": "#/components/schemas/ErrorDetail"
+          },
+          "request_id": {
+            "type": "string",
+            "title": "Request Id"
+          },
+          "problems": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/Problem"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Problems"
+          }
+        },
+        "type": "object",
+        "required": [
+          "error",
+          "request_id"
+        ],
+        "title": "ErrorResponse",
+        "description": "Every error from the public demonstration has this shape."
+      },
+      "Evidence": {
+        "properties": {
+          "document": {
+            "type": "string",
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Document"
+          },
+          "page": {
+            "type": "integer",
+            "maximum": 20.0,
+            "minimum": 1.0,
+            "title": "Page"
+          },
+          "quote": {
+            "type": "string",
+            "maxLength": 1000,
+            "minLength": 1,
+            "title": "Quote"
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Sha256"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "document",
+          "page",
+          "quote",
+          "sha256"
+        ],
+        "title": "Evidence"
+      },
+      "Fact": {
+        "properties": {
+          "field": {
+            "type": "string",
+            "title": "Field"
+          },
+          "group": {
+            "type": "string",
+            "enum": [
+              "baseline",
+              "proposal",
+              "drivers",
+              "review_basis"
+            ],
+            "title": "Group"
+          },
+          "label": {
+            "type": "string",
+            "title": "Label"
+          },
+          "source_value": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source Value",
+            "description": "As stated in the document; null when it states no usable value."
+          },
+          "source": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/SourceRef"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "reviewer_value": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reviewer Value",
+            "description": "The reviewer's override, if any. Never replaces source_value."
+          },
+          "effective_value": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Effective Value",
+            "description": "The value the reviewed calculation uses."
+          },
+          "origin": {
+            "type": "string",
+            "enum": [
+              "source",
+              "reviewer",
+              "not_stated"
+            ],
+            "title": "Origin"
+          },
+          "blocking": {
+            "type": "boolean",
+            "title": "Blocking"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "field",
+          "group",
+          "label",
+          "source_value",
+          "source",
+          "reviewer_value",
+          "effective_value",
+          "origin",
+          "blocking"
+        ],
+        "title": "Fact"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "HistoryUse": {
+        "properties": {
+          "limit": {
+            "type": "integer",
+            "title": "Limit"
+          },
+          "used": {
+            "type": "integer",
+            "title": "Used"
+          },
+          "remaining": {
+            "type": "integer",
+            "title": "Remaining"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "limit",
+          "used",
+          "remaining"
+        ],
+        "title": "HistoryUse"
+      },
+      "Integrity": {
+        "properties": {
+          "latest_reviewed_event_matches_result": {
+            "type": "boolean",
+            "title": "Latest Reviewed Event Matches Result"
+          },
+          "latest_what_if_event_matches_result": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Latest What If Event Matches Result"
+          },
+          "citation_matches_current_document": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Citation Matches Current Document"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "latest_reviewed_event_matches_result",
+          "latest_what_if_event_matches_result",
+          "citation_matches_current_document"
+        ],
+        "title": "Integrity"
+      },
+      "Issue": {
+        "properties": {
+          "code": {
+            "type": "string",
+            "title": "Code"
+          },
+          "message": {
+            "type": "string",
+            "title": "Message"
+          },
+          "field": {
+            "type": "string",
+            "title": "Field"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "code",
+          "message",
+          "field"
+        ],
+        "title": "Issue"
+      },
+      "Problem": {
+        "properties": {
+          "field": {
+            "type": "string",
+            "title": "Field"
+          },
+          "type": {
+            "type": "string",
+            "title": "Type"
+          },
+          "message": {
+            "type": "string",
+            "title": "Message"
+          }
+        },
+        "type": "object",
+        "required": [
+          "field",
+          "type",
+          "message"
+        ],
+        "title": "Problem"
+      },
+      "RestartInput": {
+        "properties": {
+          "expected_version": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 1.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Expected Version"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "RestartInput"
+      },
+      "RevertInput": {
+        "properties": {
+          "expected_version": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Expected Version"
+          },
+          "reason": {
+            "type": "string",
+            "maxLength": 500,
+            "minLength": 10,
+            "title": "Reason"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "expected_version",
+          "reason"
+        ],
+        "title": "RevertInput"
+      },
+      "ReviewResponse": {
+        "properties": {
+          "review_id": {
+            "type": "string",
+            "title": "Review Id"
+          },
+          "request_id": {
+            "type": "string",
+            "title": "Request Id",
+            "default": ""
+          },
+          "analysis_fingerprint": {
+            "type": "string",
+            "title": "Analysis Fingerprint"
+          },
+          "model_version": {
+            "type": "string",
+            "title": "Model Version"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "scenario_available",
+              "needs_information",
+              "not_comparable"
+            ],
+            "title": "Status"
+          },
+          "summary": {
+            "type": "string",
+            "title": "Summary"
+          },
+          "issues": {
+            "items": {
+              "$ref": "#/components/schemas/Issue"
+            },
+            "type": "array",
+            "title": "Issues"
+          },
+          "calculation": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Calculation"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "questions": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Questions"
+          },
+          "assumptions": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Assumptions"
+          },
+          "evidence": {
+            "items": {
+              "$ref": "#/components/schemas/Evidence"
+            },
+            "type": "array",
+            "title": "Evidence"
+          },
+          "extraction_mode": {
+            "type": "string",
+            "title": "Extraction Mode"
+          },
+          "evidence_validation": {
+            "type": "string",
+            "title": "Evidence Validation",
+            "default": "not_verified_structured_input"
+          },
+          "limitations": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Limitations"
+          },
+          "processing_ms": {
+            "type": "number",
+            "title": "Processing Ms",
+            "default": 0
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "review_id",
+          "analysis_fingerprint",
+          "model_version",
+          "status",
+          "summary",
+          "issues",
+          "calculation",
+          "questions",
+          "assumptions",
+          "evidence",
+          "extraction_mode",
+          "limitations"
+        ],
+        "title": "ReviewResponse"
+      },
+      "ReviewView": {
+        "properties": {
+          "case": {
+            "type": "string",
+            "enum": [
+              "price_increase",
+              "missing_evidence",
+              "scope_mismatch"
+            ],
+            "title": "Case"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "generation": {
+            "type": "integer",
+            "title": "Generation"
+          },
+          "version": {
+            "type": "integer",
+            "title": "Version"
+          },
+          "outcome": {
+            "type": "string",
+            "enum": [
+              "opened",
+              "resumed",
+              "restarted",
+              "recorded",
+              "no_change"
+            ],
+            "title": "Outcome"
+          },
+          "header": {
+            "$ref": "#/components/schemas/CaseHeader"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "scenario_available",
+              "needs_information",
+              "not_comparable"
+            ],
+            "title": "Status"
+          },
+          "blocking": {
+            "items": {
+              "$ref": "#/components/schemas/BlockingIssue"
+            },
+            "type": "array",
+            "title": "Blocking"
+          },
+          "resolved_by_override": {
+            "items": {
+              "$ref": "#/components/schemas/BlockingIssue"
+            },
+            "type": "array",
+            "title": "Resolved By Override"
+          },
+          "correctable_field": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "proposal.revision",
+                  "drivers.energy.current_index"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Correctable Field"
+          },
+          "facts": {
+            "items": {
+              "$ref": "#/components/schemas/Fact"
+            },
+            "type": "array",
+            "title": "Facts"
+          },
+          "correction": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/CorrectionView"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "reviewed": {
+            "$ref": "#/components/schemas/ReviewResponse"
+          },
+          "what_if_available": {
+            "type": "boolean",
+            "title": "What If Available"
+          },
+          "what_if": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/WhatIfView"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "thresholds": {
+            "items": {
+              "$ref": "#/components/schemas/ThresholdSet"
+            },
+            "type": "array",
+            "title": "Thresholds"
+          },
+          "events": {
+            "items": {
+              "$ref": "#/components/schemas/AuditEvent"
+            },
+            "type": "array",
+            "title": "Events"
+          },
+          "history": {
+            "$ref": "#/components/schemas/HistoryUse"
+          },
+          "source": {
+            "$ref": "#/components/schemas/SourceDocument"
+          },
+          "storage": {
+            "$ref": "#/components/schemas/StorageInfo"
+          },
+          "integrity": {
+            "$ref": "#/components/schemas/Integrity"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "case",
+          "title",
+          "generation",
+          "version",
+          "outcome",
+          "header",
+          "status",
+          "blocking",
+          "resolved_by_override",
+          "correctable_field",
+          "facts",
+          "correction",
+          "reviewed",
+          "what_if_available",
+          "what_if",
+          "thresholds",
+          "events",
+          "history",
+          "source",
+          "storage",
+          "integrity"
+        ],
+        "title": "ReviewView"
+      },
+      "SensitivityInput": {
+        "properties": {
+          "expected_version": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Expected Version"
+          },
+          "changes_pct": {
+            "additionalProperties": {
+              "anyOf": [
+                {
+                  "type": "number",
+                  "maximum": 200.0,
+                  "minimum": -90.0
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            },
+            "propertyNames": {
+              "enum": [
+                "materials",
+                "energy",
+                "labour",
+                "freight"
+              ]
+            },
+            "type": "object",
+            "title": "Changes Pct"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "expected_version",
+          "changes_pct"
+        ],
+        "title": "SensitivityInput"
+      },
+      "SourceDocument": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "sha256": {
+            "type": "string",
+            "title": "Sha256"
+          },
+          "download_path": {
+            "type": "string",
+            "title": "Download Path"
+          },
+          "pages": {
+            "items": {
+              "$ref": "#/components/schemas/SourcePage"
+            },
+            "type": "array",
+            "title": "Pages"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "name",
+          "sha256",
+          "download_path",
+          "pages"
+        ],
+        "title": "SourceDocument"
+      },
+      "SourcePage": {
+        "properties": {
+          "page": {
+            "type": "integer",
+            "title": "Page"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "lines": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Lines"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "page",
+          "title",
+          "lines"
+        ],
+        "title": "SourcePage"
+      },
+      "SourceRef": {
+        "properties": {
+          "document": {
+            "type": "string",
+            "title": "Document"
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Sha256"
+          },
+          "page": {
+            "type": "integer",
+            "title": "Page"
+          },
+          "line": {
+            "type": "integer",
+            "title": "Line"
+          },
+          "quote": {
+            "type": "string",
+            "title": "Quote"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "document",
+          "sha256",
+          "page",
+          "line",
+          "quote"
+        ],
+        "title": "SourceRef",
+        "description": "Where a value is stated: document identity, page, line and the exact line text."
+      },
+      "StorageInfo": {
+        "properties": {
+          "backend": {
+            "type": "string",
+            "enum": [
+              "firestore",
+              "local_test_store",
+              "memory"
+            ],
+            "title": "Backend"
+          },
+          "durable": {
+            "type": "boolean",
+            "title": "Durable"
+          },
+          "retention_days": {
+            "type": "integer",
+            "title": "Retention Days"
+          },
+          "expires_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Expires At"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "backend",
+          "durable",
+          "retention_days",
+          "expires_at"
+        ],
+        "title": "StorageInfo"
+      },
+      "ThresholdRow": {
+        "properties": {
+          "driver": {
+            "type": "string",
+            "enum": [
+              "materials",
+              "energy",
+              "labour",
+              "freight"
+            ],
+            "title": "Driver"
+          },
+          "share": {
+            "type": "string",
+            "title": "Share"
+          },
+          "held_movement_pct": {
+            "type": "string",
+            "title": "Held Movement Pct",
+            "description": "This driver's own movement under the stated basis."
+          },
+          "required_movement_pct": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Required Movement Pct",
+            "description": "Movement of this driver alone that reaches the proposed price, the other three held."
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "driver",
+          "share",
+          "held_movement_pct",
+          "required_movement_pct"
+        ],
+        "title": "ThresholdRow"
+      },
+      "ThresholdSet": {
+        "properties": {
+          "basis": {
+            "type": "string",
+            "enum": [
+              "reviewed",
+              "what_if"
+            ],
+            "title": "Basis"
+          },
+          "target_price": {
+            "type": "string",
+            "title": "Target Price"
+          },
+          "rows": {
+            "items": {
+              "$ref": "#/components/schemas/ThresholdRow"
+            },
+            "type": "array",
+            "title": "Rows"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "basis",
+          "target_price",
+          "rows"
+        ],
+        "title": "ThresholdSet"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "ctx": {
+            "type": "object",
+            "title": "Context"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      },
+      "VersionInput": {
+        "properties": {
+          "expected_version": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Expected Version"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "expected_version"
+        ],
+        "title": "VersionInput"
+      },
+      "WhatIfView": {
+        "properties": {
+          "changes_pct": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "propertyNames": {
+              "enum": [
+                "materials",
+                "energy",
+                "labour",
+                "freight"
+              ]
+            },
+            "type": "object",
+            "title": "Changes Pct"
+          },
+          "calculated_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Calculated At"
+          },
+          "calculated_in_version": {
+            "type": "integer",
+            "title": "Calculated In Version"
+          },
+          "result": {
+            "$ref": "#/components/schemas/ReviewResponse"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "changes_pct",
+          "calculated_at",
+          "calculated_in_version",
+          "result"
+        ],
+        "title": "WhatIfView"
+      }
+    }
+  }
+}
