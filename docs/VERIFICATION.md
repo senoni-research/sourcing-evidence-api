@@ -1,8 +1,18 @@
 # Verification record — 10 November 2026
 
-This record covers the hosted evidence-review build deployed as Cloud Run revision `sourcing-evidence-00007-bz6` and served at `https://sourcing.senoni.com`, and the changes made in response to the critical review of the same date. It lists what was run and observed. It is not a production certification, and it contains no extraction-accuracy figure because nothing in this build extracts from unfamiliar documents.
+This record covers the hosted evidence-review build deployed as Cloud Run revision `sourcing-evidence-00007-bz6` and served at `https://sourcing.senoni.com`, and the changes made in response to the critical review of the same date. The update below adds the published repository, its hosted CI runs and revision `00009-d5f`. It lists what was run and observed. It is not a production certification, and it contains no extraction-accuracy figure because nothing in this build extracts from unfamiliar documents.
 
-The deployment was built from the working tree recorded by the commit that adds this file; `src/` was not modified between the deployment and that commit.
+Revision `00007-bz6` was built from the working tree of the commit that first added this file, before the repository was published as a fresh history; `src/` was not modified between that deployment and that commit. That commit is not in this repository's history.
+
+## Update — 10 November 2026, 22:35 UTC: hosted CI and revision `00009-d5f`
+
+Tested commit: `6b8b997` (`6b8b99733d9e59cd18f058d68d1b7217f10dc091`, tree `ce1c4e9`), "Declare the document route's real error responses".
+
+- GitHub Actions, workflow "API checks", [run 42915724469](https://github.com/senoni-research/sourcing-evidence-api/actions/runs/42915724469), triggered by the push of `6b8b997`, 22:33–22:35 UTC: **success**. Python 3.12.16 on `ubuntu-latest`. Every step of `.github/workflows/ci.yml` passed: `ruff check .`; `ruff format --check .`; `pytest --cov=sourcing_api`, **218 passed, 4 skipped**, statement coverage 96% (1,449 statements, 54 uncovered); `python scripts/demo.py --in-process`; `docker build`. CI builds the image; it does not run it.
+- The preceding commit `daf49f3` passed the same workflow with the same counts ([run 42914515562](https://github.com/senoni-research/sourcing-evidence-api/actions/runs/42914515562)).
+- 218 rather than 216: since the record below, one test checks that the public schema lists no `/v1` path, and one checks that `docs/openapi.json` matches the public application's schema.
+- Revision `sourcing-evidence-00009-d5f` was deployed at 22:34 UTC from a clean working tree with the same git tree as `6b8b997` (`ce1c4e9`). On `sourcing.senoni.com` after that deployment: the served `/openapi.json` equalled `docs/openapi.json`; `scripts/hosted_check.py --resume` read back, unchanged, a review saved on `00008-2cx` (version 3, three history entries); `scripts/browser_check.py` passed, including Swagger UI at `/docs` rendering the nine `/demo` operations.
+- Changed since the record below: public mode now serves `/docs` (Swagger UI over the public schema). The 404 for `/docs` reported under "Hosted service" applies to `00007-bz6`. Probed on `00009-d5f` at 22:47 UTC: `/docs` returned 200; `/redoc`, `/metrics`, the three `/v1` POST routes and the two `/v1/examples` GET routes returned 404.
 
 ## Automated checks
 
@@ -111,5 +121,5 @@ A selection of screenshots from both runs was inspected by eye.
 - Real devices and assistive technology. Narrow layouts were checked in an emulated Chromium viewport; no screen reader was run.
 - Load, penetration testing, IAM review, behaviour with two instances serving concurrently under traffic.
 - Deletion of expired records. They are no longer served after seven days, but no Firestore TTL policy is configured. The fictional reviews created by the hosted checks above remain stored until one is.
-- Docker build on a developer machine, hosted CI, Kubernetes. The image was built by Cloud Build as part of the deployment.
+- `docker build` and `docker run` on a developer machine, and Kubernetes. Hosted CI, including a Docker build, has since passed (see the update above); the CI-built image is not run. Cloud Build builds the deployed image.
 - The original local upload UI in a browser for this build; its automated tests passed.

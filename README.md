@@ -190,7 +190,7 @@ docker build -t sourcing-evidence-api:local .
 docker run --rm -p 127.0.0.1:8000:8000 sourcing-evidence-api:local
 ```
 
-Docker build/run was not verified in the authoring environment. CI configuration is included for future repository runs; a workflow file is not evidence that hosted CI has passed.
+`docker build` and `docker run` have not been tried on a developer machine. The same Dockerfile is built by CI on every push and by Cloud Build on every deployment, and Cloud Run runs the Cloud Build image. CI (`.github/workflows/ci.yml`) runs ruff, pytest with coverage, the in-process demo and the Docker build; the latest recorded run and the commit it tested are in [docs/VERIFICATION.md](docs/VERIFICATION.md).
 
 Use the upload path locally with trusted fictional documents. Its byte/page/text caps do not isolate malicious compressed PDFs or fully bound parser CPU and memory. PDF parsing currently runs in a thread within the API process; public uploads need an isolated, resource-limited document worker.
 
