@@ -502,16 +502,17 @@ def test_public_routes_declare_typed_success_and_error_schemas(client):
             content = operation["responses"]["200"]["content"]
             if path.endswith("/document"):
                 assert "application/pdf" in content
-                continue
-            success = content["application/json"]["schema"]
-            expected = "CaseList" if path == "/demo/reviews" else "ReviewView"
-            assert success == {"$ref": f"#/components/schemas/{expected}"}, (method, path)
+            else:
+                success = content["application/json"]["schema"]
+                expected = "CaseList" if path == "/demo/reviews" else "ReviewView"
+                assert success == {"$ref": f"#/components/schemas/{expected}"}, (method, path)
             errors = [code for code in operation["responses"] if code != "200"]
             assert errors, path
             for code in errors:
                 assert operation["responses"][code]["content"]["application/json"]["schema"] == {
                     "$ref": "#/components/schemas/ErrorResponse"
                 }, (path, code)
+    assert "HTTPValidationError" not in schema["components"]["schemas"]
     view = schema["components"]["schemas"]["ReviewView"]
     assert {"facts", "blocking", "correction", "reviewed", "what_if", "thresholds", "events"} <= set(
         view["required"]

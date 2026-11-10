@@ -767,7 +767,7 @@
             }
           },
           "404": {
-            "description": "`review_not_found`: this browser has no review of the case.",
+            "description": "`review_not_found`: not one of the fictional cases.",
             "content": {
               "application/json": {
                 "schema": {
@@ -777,11 +777,21 @@
             }
           },
           "422": {
-            "description": "Validation Error",
+            "description": "`invalid_request`: the request does not match the schema.",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "`demo_rate_limit`: per-instance request limit reached.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -1783,19 +1793,6 @@
         ],
         "title": "Fact"
       },
-      "HTTPValidationError": {
-        "properties": {
-          "detail": {
-            "items": {
-              "$ref": "#/components/schemas/ValidationError"
-            },
-            "type": "array",
-            "title": "Detail"
-          }
-        },
-        "type": "object",
-        "title": "HTTPValidationError"
-      },
       "HistoryUse": {
         "properties": {
           "limit": {
@@ -2463,46 +2460,6 @@
           "rows"
         ],
         "title": "ThresholdSet"
-      },
-      "ValidationError": {
-        "properties": {
-          "loc": {
-            "items": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "integer"
-                }
-              ]
-            },
-            "type": "array",
-            "title": "Location"
-          },
-          "msg": {
-            "type": "string",
-            "title": "Message"
-          },
-          "type": {
-            "type": "string",
-            "title": "Error Type"
-          },
-          "input": {
-            "title": "Input"
-          },
-          "ctx": {
-            "type": "object",
-            "title": "Context"
-          }
-        },
-        "type": "object",
-        "required": [
-          "loc",
-          "msg",
-          "type"
-        ],
-        "title": "ValidationError"
       },
       "VersionInput": {
         "properties": {

@@ -512,7 +512,18 @@ def create_app(settings: Settings | None = None, extractor=None, workflow_store=
             "/demo/{case}/document",
             **demo,
             response_class=Response,
-            responses={200: {"content": {"application/pdf": {}}}, 404: DEMO_ERRORS[404]},
+            responses={
+                200: {"content": {"application/pdf": {}}},
+                404: {
+                    "model": ErrorResponse,
+                    "description": "`review_not_found`: not one of the fictional cases.",
+                },
+                422: {
+                    "model": ErrorResponse,
+                    "description": "`invalid_request`: the request does not match the schema.",
+                },
+                429: DEMO_ERRORS[429],
+            },
             summary="Download the fictional source pack the review cites",
         )
         async def demo_document(case: str):
